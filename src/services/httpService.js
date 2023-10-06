@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:8080/api/v1";
+axios.defaults.baseURL = "http://localhost:5065";
 
 const http = {
   get: axios.get,

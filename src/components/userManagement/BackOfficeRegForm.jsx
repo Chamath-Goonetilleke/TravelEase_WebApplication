@@ -2,6 +2,8 @@ import React from "react";
 import Joi from "joi-browser";
 
 import Form from "../common/form";
+import { createUser } from "../../services/userService";
+import { toast } from "react-toastify";
 
 export default class BackOfficeRegForm extends Form {
   state = {
@@ -53,8 +55,23 @@ export default class BackOfficeRegForm extends Form {
     this.setState({ data });
   };
 
-  doSubmit = () => {
-    console.log("sumbmitted");
+  doSubmit = async () => {
+    const { data } = this.state;
+    data.role = this.props.role;
+    delete data.cPassword;
+
+     await toast.promise(
+       createUser(data),
+       {
+         pending: "Registering...",
+         success: "Registered Successfully",
+         error: "Something Went Wrong",
+       },
+       { autoClose: 1000 }
+     );
+     setTimeout(() => {
+       window.location.reload();
+     }, 2000);
   };
 
   render() {
@@ -65,7 +82,7 @@ export default class BackOfficeRegForm extends Form {
             <h2>Back Office User Registration</h2>
           </div>
 
-          <form onSubmit={this.handleSubmit} >
+          <form onSubmit={this.handleSubmit}>
             {this.renderDropDown("Title", "title", this.options)}
             {this.renderInputField(
               "First Name",
@@ -133,13 +150,15 @@ export default class BackOfficeRegForm extends Form {
             <br />
             <br />
             <br />
-            {this.renderButton(
-              "Reset",
-              "contained",
-              "reset",
-              false,
-              this.onReset
-            )}
+            <span style={{ marginRight: "2rem" }}>
+              {this.renderButton(
+                "Reset",
+                "contained",
+                "reset",
+                false,
+                this.onReset
+              )}
+            </span>
             {this.renderButton("Submit", "contained", "submit")}
           </form>
         </center>

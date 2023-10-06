@@ -1,7 +1,9 @@
-import React from 'react'
+import React from "react";
 import Joi from "joi-browser";
+import { toast } from "react-toastify";
 
 import Form from "../common/form";
+import { createUser } from "../../services/userService";
 
 export default class TravelAgentRegForm extends Form {
   state = {
@@ -50,11 +52,27 @@ export default class TravelAgentRegForm extends Form {
       password: "",
       cPassword: "",
     };
+
     this.setState({ data });
   };
 
-  doSubmit = () => {
-    console.log("sumbmitted");
+  doSubmit = async () => {
+    const { data } = this.state;
+    data.role = this.props.role;
+    delete data.cPassword;
+
+    await toast.promise(
+      createUser(data),
+      {
+        pending: "Registering...",
+        success: "Registered Successfully",
+        error: "Something Went Wrong",
+      },
+      { autoClose: 1000 }
+    );
+     setTimeout(() => {
+       window.location.reload()
+     }, 2000);
   };
 
   render() {
@@ -133,13 +151,15 @@ export default class TravelAgentRegForm extends Form {
             <br />
             <br />
             <br />
-            {this.renderButton(
-              "Reset",
-              "contained",
-              "reset",
-              false,
-              this.onReset
-            )}
+            <span style={{ marginRight: "2rem" }}>
+              {this.renderButton(
+                "Reset",
+                "contained",
+                "reset",
+                false,
+                this.onReset
+              )}
+            </span>
             {this.renderButton("Submit", "contained", "submit")}
           </form>
         </center>

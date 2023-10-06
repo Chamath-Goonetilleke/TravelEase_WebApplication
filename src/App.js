@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
+import { ToastContainer, Zoom } from "react-toastify";
 
 import AppHeader from "./components/common/Header";
 
@@ -17,11 +18,28 @@ export default class App extends Component {
         </div>
         <div
           className="app-body"
-          style={{ height: "79.2vh", margin: "1rem", border: "1px solid black" }}
+          style={{
+            height: "79.2vh",
+            margin: "1rem",
+            border: "1px solid black",
+          }}
         >
           <Switch>
             <Route path="/" component={LoginRegPage} />
           </Switch>
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            transition={Zoom}
+          />
         </div>
         <div className="app-footer">
           <Footer />
