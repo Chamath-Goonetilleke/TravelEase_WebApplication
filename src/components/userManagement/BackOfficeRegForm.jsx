@@ -19,6 +19,7 @@ export default class BackOfficeRegForm extends Form {
       cPassword: "",
     },
     errors: {},
+    isLoading: false,
   };
 
   schema = {
@@ -52,7 +53,7 @@ export default class BackOfficeRegForm extends Form {
       password: "",
       cPassword: "",
     };
-    this.setState({ data });
+    this.setState({ data:data , errors:{}});
   };
 
   doSubmit = async () => {
@@ -60,21 +61,25 @@ export default class BackOfficeRegForm extends Form {
     data.role = this.props.role;
     delete data.cPassword;
 
-     await toast.promise(
-       createUser(data),
-       {
-         pending: "Registering...",
-         success: "Registered Successfully",
-         error: "Something Went Wrong",
-       },
-       { autoClose: 1000 }
-     );
-     setTimeout(() => {
-       window.location.reload();
-     }, 2000);
+      this.setState({ isLoading: true });
+      await createUser(data)
+        .then(({ data }) => {
+          toast.success(data, { autoClose: 1000 });
+          this.setState({ isLoading: false });
+          setTimeout(async () => {
+            this.onReset();
+            window.location.reload();
+          }, 2000);
+        })
+        .catch((err) => {
+          toast.error(err.response.data);
+          this.setState({ isLoading: false });
+          this.onReset();
+        });
   };
 
   render() {
+    const { isLoading } = this.state;
     return (
       <div>
         <center>
@@ -156,10 +161,11 @@ export default class BackOfficeRegForm extends Form {
                 "contained",
                 "reset",
                 false,
+                false,
                 this.onReset
               )}
             </span>
-            {this.renderButton("Submit", "contained", "submit")}
+            {this.renderButton("Submit", "contained", "submit", isLoading)}
           </form>
         </center>
       </div>

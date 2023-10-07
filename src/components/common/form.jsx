@@ -60,7 +60,7 @@ class Form extends Component {
     this.doSubmit();
   };
 
-  renderInputField(label, name, type, style, isRequired) {
+  renderInputField(label, name, type, style, isRequired, disabled=false) {
     const { data, errors } = this.state;
     return (
       <TextField
@@ -73,10 +73,18 @@ class Form extends Component {
         value={data[name]}
         sx={style}
         helperText={errors[name]}
+        disabled = {disabled}
       />
     );
   }
-  renderButton(label, variant, type, disabled=this.validate(this.schema, this.state.data), onClick) {
+  renderButton(
+    label,
+    variant,
+    type,
+    isLoading = false,
+    disabled = this.validate(this.schema, this.state.data),
+    onClick
+  ) {
     return (
       <React.Fragment>
         <Button
@@ -85,19 +93,27 @@ class Form extends Component {
           onClick={onClick}
           disabled={disabled}
         >
+          <span
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="false"
+            style={{ marginRight: "1rem" }}
+            hidden={!isLoading}
+          ></span>
           {label}
         </Button>
       </React.Fragment>
     );
   }
-  renderDropDown(label, name, options) {
-    const { data} = this.state;
+  renderDropDown(label, name, options, disabled=false) {
+    const { data } = this.state;
     return (
       <Select
         label={label}
         value={data[name]}
         name={name}
         onChange={this.handleChange}
+        disabled={disabled}
       >
         {options.map((option, index) => (
           <MenuItem key={index} value={option.value}>

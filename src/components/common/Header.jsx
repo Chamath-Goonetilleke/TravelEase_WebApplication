@@ -12,11 +12,41 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { NavLink } from "react-router-dom";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { Badge } from "@mui/material";
 
-function AppHeader() {
+function AppHeader({ user, onLogout }) {
+  const pages = ["Home", "About Us", "Contacts Us"];
+  const urls = ["/home", "/about", "/contact"];
+  const settings = [];
+
+  if (user != null) {
+    // if (user.isAdmin) {
+    //   settings.push({
+    //     screen: "Admin Panel",
+    //     path: "/admin",
+    //     icon: <AdminPanelSettingsIcon />,
+    //   });
+    // }
+    settings.push({
+      screen: "Profile",
+      path: "/profile",
+      icon: <PersonOutlineIcon />,
+    });
+  } else {
+    settings.push({
+      screen: "Sign in",
+      path: "/login",
+      icon: <LoginIcon />,
+    });
+  }
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -44,7 +74,7 @@ function AppHeader() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/home"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -55,7 +85,7 @@ function AppHeader() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            TravelEase
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -87,10 +117,12 @@ function AppHeader() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
+              {pages.map((page, index) => (
+                <NavLink key={index} to={urls[pages.indexOf(page)]}>
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
+                </NavLink>
               ))}
             </Menu>
           </Box>
@@ -99,7 +131,7 @@ function AppHeader() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/home"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -111,24 +143,35 @@ function AppHeader() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            TravelEase
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
+            {pages.map((page, index) => (
+              <NavLink key={index} to={urls[pages.indexOf(page)]}>
+                <Button
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page}
+                </Button>
+              </NavLink>
             ))}
           </Box>
-
+          <IconButton
+            size="large"
+            aria-label="show 17 new notifications"
+            color="inherit"
+            style={{ marginRight: "2rem", color: "white" }}
+          >
+            <Badge badgeContent={17} color="error">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar src={user !== null ? user.imageUrl : "Unknown"} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -147,11 +190,41 @@ function AppHeader() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              {user !== null && (
+                <MenuItem
+                  style={{
+                    justifyContent: "center",
+                  }}
+                >
+                  <Button variant="text" style={{ color: "black" }}>
+                    {user.title + " " + user.firstName + " " + user.lastName}
+                  </Button>
                 </MenuItem>
+              )}
+              {settings.map((setting, index) => (
+                <NavLink
+                  key={index}
+                  to={setting.path}
+                  style={{ textDecoration: "none" }}
+                >
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Button variant="text" startIcon={setting.icon}>
+                      {setting.screen}
+                    </Button>
+                  </MenuItem>
+                </NavLink>
               ))}
+              {user !== null && (
+                <MenuItem>
+                  <Button
+                    variant="text"
+                    startIcon={<LogoutIcon />}
+                    onClick={() => onLogout()}
+                  >
+                    Logout
+                  </Button>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>

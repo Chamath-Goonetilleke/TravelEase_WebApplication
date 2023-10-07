@@ -2,6 +2,8 @@ import React from 'react'
 import Joi from "joi-browser";
 
 import Form from "../common/form";
+import { toast } from 'react-toastify';
+import { authUser } from '../../services/authService';
 export default class TravelAgentLogForm extends Form {
   state = {
     data: {
@@ -9,6 +11,7 @@ export default class TravelAgentLogForm extends Form {
       password: "",
     },
     errors: {},
+    isLoading: false,
   };
 
   schema = {
@@ -24,11 +27,28 @@ export default class TravelAgentLogForm extends Form {
     this.setState({ data });
   };
 
-  doSubmit = () => {
-    console.log("sumbmitted");
+  doSubmit = async () => {
+    const { data } = this.state;
+    data.role = this.props.role;
+    this.setState({ isLoading: true });
+    await authUser(data)
+      .then(({ data }) => {
+        toast.success(data, { autoClose: 1000 });
+        this.setState({ isLoading: false });
+        setTimeout(async () => {
+          this.onReset();
+          window.location = "/profile";
+        }, 2000);
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+        this.setState({ isLoading: false });
+        this.onReset();
+      });
   };
 
   render() {
+    const { isLoading } = this.state;
     return (
       <div>
         <center>
@@ -64,10 +84,11 @@ export default class TravelAgentLogForm extends Form {
                 "contained",
                 "reset",
                 false,
+                false,
                 this.onReset
               )}
             </span>
-            {this.renderButton("Login", "contained", "submit")}
+            {this.renderButton("Login", "contained", "submit", isLoading)}
           </form>
         </center>
       </div>
