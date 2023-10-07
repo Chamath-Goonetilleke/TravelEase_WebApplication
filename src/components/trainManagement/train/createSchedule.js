@@ -94,7 +94,7 @@ export default class createSchedule extends Component {
       startTime: this.state.startTime,
       endStation: this.state.endStation,
       endTime: this.state.endTime,
-      stations: this.state.stationsArray
+      stations: this.state.stationsArray.slice(1),
     };
     console.log("data: ", data);
     this.props.callMainTrainFunction();
@@ -233,7 +233,7 @@ export default class createSchedule extends Component {
                 </div>
                 <hr style={{ width: "65%" }} />
                 {/* Dynamic array */}
-                <div style={{width: '90%'}}>
+                <div style={{ width: "90%" }}>
                   <div>
                     <Grid container spacing={2}>
                       <Grid item xs={3}>
@@ -305,10 +305,12 @@ export default class createSchedule extends Component {
                       <Grid
                         item
                         xs={1}
-                        style={{ marginTop: "16px" }}
-                        onClick={this.handleNewRecordToData}
+                        style={{ marginTop: "6px" }}
                       >
+                        <IconButton aria-label="Example" onClick={this.handleNewRecordToData}>
                         <LibraryAddIcon />
+                        </IconButton>
+                        
                       </Grid>
                     </Grid>
                   </div>
@@ -376,7 +378,7 @@ export default class createSchedule extends Component {
                 <div>
                   <h2>Records:</h2>
                   <ul>
-                    {this.state.stationsArray.map((field, index) => (
+                    {this.state.stationsArray.slice(1).map((field, index) => (
                       <li key={index}>
                         {field.newStartStation} - {field.newEndStation} -{" "}
                         {field.distance} Km
