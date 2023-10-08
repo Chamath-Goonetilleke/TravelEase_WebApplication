@@ -12,6 +12,7 @@ import Cookies from "js-cookie";
 import PrivateRoute from "./components/common/PrivateRoute";
 import ProfilePage from "./components/userManagement/UserProfile/ProfilePage";
 import Home from "./components/userManagement/Home";
+import TravelerProfilePage from "./components/userManagement/TravelerProfile/TravelerProfilePage";
 
 export default class App extends Component {
   constructor(props) {
@@ -50,8 +51,7 @@ export default class App extends Component {
         <div
           className="app-body"
           style={{
-            height: "79.2vh",
-            margin: "1rem",
+            height: "83vh",
           }}
         >
           <Switch>
@@ -64,6 +64,7 @@ export default class App extends Component {
               authenticated={authenticated}
               user={currentUser}
             />
+            <Route path = '/traveler/:traveler' render={(props)=> <TravelerProfilePage user={currentUser} {...props} />} />
             <Route path="/home" component={Home} />
             <Redirect to="/home" />
           </Switch>

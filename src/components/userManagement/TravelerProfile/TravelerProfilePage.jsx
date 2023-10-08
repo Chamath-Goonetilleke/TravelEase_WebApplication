@@ -1,29 +1,35 @@
 import { Avatar, Button, Fab } from "@mui/material";
 import React, { Component } from "react";
-import UpdateBackOfficeUser from "./UpdateBackOfficeUser";
 import EditIcon from "@mui/icons-material/Edit";
 import { updateUser } from "../../../services/userService";
 import { toast } from "react-toastify";
-import UpdateTravelAgent from "./UpdateTravelAgent";
-import TravelAgentDetails from "./TravelAgentDetails";
+import UpdateTravelerForm from "./UpdateTravelerForm";
+import AlertDialog from "../../common/AlertDialog";
 
-export default class ProfilePage extends Component {
+export default class TravelerProfilePage extends Component {
   state = {
     avatarImage: null,
     isEnabled: false,
+    deleteDialogOpen: false,
+    deleteMessage: {
+      title: "Delete Traveler Profile",
+      text: "Are you sure you want to delete?",
+    },
   };
 
   handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      // Read the selected file as a data URL
       const reader = new FileReader();
       reader.onload = (e) => {
-        // Update the state with the selected image
         this.setState({ avatarImage: e.target.result });
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  handleDeleteDialogClose = () => {
+    this.setState({ deleteDialogOpen: false });
   };
 
   handleSaveImage = async () => {
@@ -44,9 +50,9 @@ export default class ProfilePage extends Component {
   };
 
   render() {
-    const { user } = this.props;
-    const { avatarImage, isEnabled } = this.state;
-
+    const traveler = JSON.parse(this.props.match.params.traveler);
+    const { avatarImage, isEnabled, deleteDialogOpen, deleteMessage } =
+      this.state;
     return (
       <div style={{ backgroundColor: "#ebebeb" }}>
         <div
@@ -82,7 +88,7 @@ export default class ProfilePage extends Component {
               <div style={{ marginRight: "1rem", flex: 1 }}>
                 <Avatar
                   alt=""
-                  src={avatarImage || user.imageUrl}
+                  src={avatarImage || traveler.imageUrl}
                   sx={{ width: 120, height: 120 }}
                 />
                 <input
@@ -114,22 +120,20 @@ export default class ProfilePage extends Component {
                     marginTop: "-1rem",
                   }}
                 >
-                  {user.role === "BackOfficeUser"
-                    ? "Back Office User"
-                    : "Travel Agent"}
+                  Traveler Account
                 </div>
               </div>
               <div>
                 <div style={{ fontSize: "18px", marginTop: "1rem", flex: 2 }}>
                   <div>
-                    {user.title + " " + user.firstName + " " + user.lastName}
+                    {traveler.title +
+                      " " +
+                      traveler.firstName +
+                      " " +
+                      traveler.lastName}
                   </div>
-                  <div>{user.email}</div>
-                  <div>
-                    {user.role === "BackOfficeUser"
-                      ? "Emp ID : " + user.employeeId
-                      : "Agent ID : " + user.travelAgentId}
-                  </div>
+                  <div>{traveler.email}</div>
+                  <div>{"NIC : " + traveler.nic}</div>
                 </div>
                 <div
                   style={{
@@ -161,6 +165,8 @@ export default class ProfilePage extends Component {
             <div
               className="userData"
               style={{
+                display: "flex",
+                flexDirection: "column",
                 flex: 2.5,
                 padding: "1rem",
                 backgroundColor: "white",
@@ -168,13 +174,15 @@ export default class ProfilePage extends Component {
                 boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.2)",
               }}
             >
-              {user.role === "BackOfficeUser" ? (
-                <UpdateBackOfficeUser user={user} role={user.role} />
-              ) : user.role === "TravelAgent" ? (
-                <UpdateTravelAgent user={user} role={user.role} />
-              ) : (
-                <></>
-              )}
+              <UpdateTravelerForm traveler={traveler} />
+              <Button
+                variant="outlined"
+                color="error"
+                sx={{ marginTop: "4rem" }}
+                onClick={() => this.setState({ deleteDialogOpen: true })}
+              >
+                Delete the traveler Profile
+              </Button>
             </div>
           </div>
           <div
@@ -185,12 +193,15 @@ export default class ProfilePage extends Component {
               backgroundColor: "white",
               borderRadius: "15px",
               boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.2)",
-              display:'flex'
+              display: "flex",
             }}
-          >
-            <TravelAgentDetails user={user} role={user.role} />
-          </div>
+          ></div>
         </div>
+        <AlertDialog
+          open={deleteDialogOpen}
+          handleClose={this.handleDeleteDialogClose}
+          message={deleteMessage}
+        />
       </div>
     );
   }
