@@ -1,16 +1,15 @@
 import React, { Component } from "react";
-import { Avatar } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import TravelerRegForm from "../TravelerRegForm";
+import TravelerRegForm from "../../travelerManagement/TravelerRegForm";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { getAllTravelers } from "../../../services/travelerService";
-import TravelerCard from "./TravelerCard";
+import TravelerCard from "../../travelerManagement/TravelerProfile/TravelerCard";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -53,7 +52,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-export default class TravelAgentDetails extends Component {
+export default class TravelAgentFunctions extends Component {
   state = {
     searchValue: null,
     travelers: [],
@@ -70,12 +69,12 @@ export default class TravelAgentDetails extends Component {
   };
 
   handleInputChange = (e) => {
-   const searchValue = e.target.value;
-   const filteredTravelers = this.state.travelers.filter((traveler) =>
-     traveler.nic.includes(searchValue)
-   );
+    const searchValue = e.target.value;
+    const filteredTravelers = this.state.travelers.filter((traveler) =>
+      traveler.nic.includes(searchValue)
+    );
 
-   this.setState({ searchValue, filteredTravelers });
+    this.setState({ searchValue, filteredTravelers });
   };
 
   render() {
@@ -120,11 +119,15 @@ export default class TravelAgentDetails extends Component {
             </div>
           </AccordionSummary>
           <AccordionDetails>
-            {filteredTravelers.length > 0 ? <div style={{ display: "flex", flexDirection: "row" }}>
-              {filteredTravelers.map((traveler) => (
-                <TravelerCard traveler={traveler} />
-              ))}
-            </div>:<div>No Travelers Found</div>}
+            {filteredTravelers.length > 0 ? (
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                {filteredTravelers.map((traveler) => (
+                  <TravelerCard traveler={traveler} />
+                ))}
+              </div>
+            ) : (
+              <div>No Travelers Found</div>
+            )}
           </AccordionDetails>
         </Accordion>
 
@@ -140,6 +143,18 @@ export default class TravelAgentDetails extends Component {
           <AccordionDetails>
             <TravelerRegForm user={this.props.user} />
           </AccordionDetails>
+        </Accordion>
+
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+            sx={{ height: "5rem" }}
+          >
+            <Typography fontSize={22}>Traveler Reservations</Typography>
+          </AccordionSummary>
+          <AccordionDetails></AccordionDetails>
         </Accordion>
       </div>
     );

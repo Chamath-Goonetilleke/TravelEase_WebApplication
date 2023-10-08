@@ -5,7 +5,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import { updateUser } from "../../../services/userService";
 import { toast } from "react-toastify";
 import UpdateTravelAgent from "./UpdateTravelAgent";
-import TravelAgentDetails from "./TravelAgentDetails";
+import TravelAgentFunctions from "./TravelAgentFunctons";
+import BackOfficeUserFunctions from "./BackOfficeUserFunctions";
 
 export default class ProfilePage extends Component {
   state = {
@@ -185,10 +186,16 @@ export default class ProfilePage extends Component {
               backgroundColor: "white",
               borderRadius: "15px",
               boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.2)",
-              display:'flex'
+              display: "flex",
             }}
           >
-            <TravelAgentDetails user={user} role={user.role} />
+            {user.role === "BackOfficeUser" ? (
+              <BackOfficeUserFunctions/>
+            ) : user.role === "TravelAgent" ? (
+              <TravelAgentFunctions user={user} role={user.role} />
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>

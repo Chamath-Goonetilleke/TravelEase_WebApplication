@@ -4,7 +4,6 @@ import Joi from "joi-browser";
 import Form from "../common/form";
 import { toast } from "react-toastify";
 import { createTraveler } from "../../services/travelerService";
-import { Remove } from "@mui/icons-material";
 
 export default class TravelerRegForm extends Form {
   state = {
@@ -73,7 +72,7 @@ export default class TravelerRegForm extends Form {
   };
 
   render() {
-    const { isLoading, EditDisabled } = this.state;
+    const { isLoading } = this.state;
     return (
       <div>
         <center>

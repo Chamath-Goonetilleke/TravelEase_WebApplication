@@ -3,10 +3,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import EditNoteIcon from "@mui/icons-material/EditNote";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Avatar, IconButton } from "@mui/material";
-import AlertDialog from "../../common/AlertDialog";
+import { Avatar} from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function TravelerCard({ traveler }) {

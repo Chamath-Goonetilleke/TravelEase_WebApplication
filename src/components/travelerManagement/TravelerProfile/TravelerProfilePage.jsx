@@ -5,6 +5,7 @@ import { updateUser } from "../../../services/userService";
 import { toast } from "react-toastify";
 import UpdateTravelerForm from "./UpdateTravelerForm";
 import AlertDialog from "../../common/AlertDialog";
+import { deleteTraveler } from "../../../services/travelerService";
 
 export default class TravelerProfilePage extends Component {
   state = {
@@ -48,6 +49,23 @@ export default class TravelerProfilePage extends Component {
         toast.error(err.response.data);
       });
   };
+
+  handleDeleteTraveler = async () => {
+    const traveler = JSON.parse(this.props.match.params.traveler);
+     await deleteTraveler(traveler.nic)
+       .then(({ data }) => {
+         toast.success(data, { autoClose: 1000 });
+         this.setState({ isLoading: false });
+         setTimeout(async () => {
+           window.location = "/profile";
+         }, 2000);
+       })
+       .catch((err) => {
+         toast.error(err.response.data);
+         this.setState({ isLoading: false });
+         this.onReset();
+       });
+  }
 
   render() {
     const traveler = JSON.parse(this.props.match.params.traveler);
@@ -201,6 +219,7 @@ export default class TravelerProfilePage extends Component {
           open={deleteDialogOpen}
           handleClose={this.handleDeleteDialogClose}
           message={deleteMessage}
+          onOKButton={this.handleDeleteTraveler}
         />
       </div>
     );

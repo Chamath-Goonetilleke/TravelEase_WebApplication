@@ -6,7 +6,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function AlertDialog({ open, handleClose, message }) {
+export default function AlertDialog({
+  open,
+  handleClose,
+  message,
+  onOKButton,
+}) {
   return (
     <div>
       <Dialog
@@ -15,9 +20,7 @@ export default function AlertDialog({ open, handleClose, message }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {message.title}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{message.title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {message.text}
@@ -25,7 +28,13 @@ export default function AlertDialog({ open, handleClose, message }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button
+            onClick={() => {
+              onOKButton();
+              handleClose();   
+            }}
+            autoFocus
+          >
             Ok
           </Button>
         </DialogActions>

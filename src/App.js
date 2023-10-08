@@ -12,7 +12,7 @@ import Cookies from "js-cookie";
 import PrivateRoute from "./components/common/PrivateRoute";
 import ProfilePage from "./components/userManagement/UserProfile/ProfilePage";
 import Home from "./components/userManagement/Home";
-import TravelerProfilePage from "./components/userManagement/TravelerProfile/TravelerProfilePage";
+import TravelerProfilePage from "./components/travelerManagement/TravelerProfile/TravelerProfilePage";
 
 export default class App extends Component {
   constructor(props) {

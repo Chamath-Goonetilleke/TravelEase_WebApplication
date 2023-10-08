@@ -5,6 +5,7 @@ import Form from "../../common/form";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import { updateTraveler } from "../../../services/travelerService";
 
 export default class UpdateTravelerForm extends Form {
   state = {
@@ -62,23 +63,23 @@ export default class UpdateTravelerForm extends Form {
     const { traveler } = this.props;
     newTraveler.role = this.props.role;
     newTraveler.imageUrl = traveler.imageUrl;
+    newTraveler.nic = traveler.nic;
 
     this.setState({ isLoading: true });
-    window.history.pushState({}, "", "/profile");
-    // await updateUser(newUser)
-    //   .then(({ data }) => {
-    //     toast.success(data, { autoClose: 1000 });
-    //     this.setState({ isLoading: false });
-    //     setTimeout(async () => {
-    //       this.onReset();
-    //       window.location.reload();
-    //     }, 2000);
-    //   })
-    //   .catch((err) => {
-    //     toast.error(err.response.data);
-    //     this.setState({ isLoading: false });
-    //     this.onReset();
-    //   });
+
+    await updateTraveler(newTraveler)
+      .then(({ data }) => {
+        toast.success(data, { autoClose: 1000 });
+        this.setState({ isLoading: false });
+        setTimeout(async () => {
+          window.location = "/profile";
+        }, 2000);
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+        this.setState({ isLoading: false });
+        this.onReset();
+      });
   };
 
   render() {
