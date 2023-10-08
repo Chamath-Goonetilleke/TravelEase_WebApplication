@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { Route, Switch, Redirect } from "react-router-dom";
 import Trainpage from './components/trainManagement/train/trainpage';
-
-import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer, Zoom } from "react-toastify";
 
 import AppHeader from "./components/common/Header";
@@ -48,11 +45,7 @@ export default class App extends Component {
     const { authenticated, currentUser } = this.state;
     console.log(currentUser);
     return (
-      <React.Fragment>
-        <Switch>
-        <Route path="/schedule-train" component={Trainpage}></Route>
-        </Switch>
-      </React.Fragment>
+
       <div className="app">
         <div className="app-header">
           <AppHeader user={currentUser} onLogout={this.handleLogout} />
@@ -75,7 +68,9 @@ export default class App extends Component {
             />
             <Route path = '/traveler/:traveler' render={(props)=> <TravelerProfilePage user={currentUser} {...props} />} />
             <Route path="/home" component={Home} />
+            <Route path="/schedule-train" component={Trainpage}></Route>
             <Redirect to="/home" />
+            
           </Switch>
           <ToastContainer
             position="top-right"
