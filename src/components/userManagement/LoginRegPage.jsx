@@ -13,7 +13,7 @@ import BackOfficeRegForm from "./BackOfficeRegForm";
 
 export default class LoginRegPage extends Component {
   state = {
-    role: 2,
+    role: "BackOfficeUser",
     isLogin: true,
   };
 
@@ -36,7 +36,7 @@ export default class LoginRegPage extends Component {
               marginBottom: "2rem",
               display: "flex",
               flexDirection: "row",
-              justifyContent:'space-between'
+              justifyContent: "space-between",
             }}
           >
             <div style={{ marginRight: "2rem" }}>
@@ -48,8 +48,8 @@ export default class LoginRegPage extends Component {
                 label="Role"
                 onChange={this.handleRoleChange}
               >
-                <MenuItem value={1}>Travel Agent</MenuItem>
-                <MenuItem value={2}>Back Office User</MenuItem>
+                <MenuItem value="TravelAgent">Travel Agent</MenuItem>
+                <MenuItem value="BackOfficeUser">Back Office User</MenuItem>
               </Select>
             </div>
             {isLogin ? (
@@ -69,15 +69,15 @@ export default class LoginRegPage extends Component {
             )}
           </div>
           {isLogin ? (
-            role === 1 ? (
+            role === "TravelAgent" ? (
               <TravelAgentLogForm role={role} />
             ) : (
-              role === 2 && <BackOfficeLogForm role={role} />
+              role === "BackOfficeUser" && <BackOfficeLogForm role={role} />
             )
-          ) : role === 1 ? (
+          ) : role === "TravelAgent" ? (
             <TravelAgentRegForm role={role} />
           ) : (
-            role === 2 && <BackOfficeRegForm role={role} />
+            role === "BackOfficeUser" && <BackOfficeRegForm role={role} />
           )}
         </div>
       </div>

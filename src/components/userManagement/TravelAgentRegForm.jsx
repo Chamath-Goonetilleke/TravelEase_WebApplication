@@ -1,7 +1,9 @@
-import React from 'react'
+import React from "react";
 import Joi from "joi-browser";
+import { toast } from "react-toastify";
 
 import Form from "../common/form";
+import { createUser } from "../../services/userService";
 
 export default class TravelAgentRegForm extends Form {
   state = {
@@ -17,6 +19,7 @@ export default class TravelAgentRegForm extends Form {
       cPassword: "",
     },
     errors: {},
+    isLoading: false,
   };
 
   schema = {
@@ -50,14 +53,34 @@ export default class TravelAgentRegForm extends Form {
       password: "",
       cPassword: "",
     };
-    this.setState({ data });
+
+    this.setState({ data:data, errors:{} });
   };
 
-  doSubmit = () => {
-    console.log("sumbmitted");
+  doSubmit = async () => {
+    const { data } = this.state;
+    data.role = this.props.role;
+    delete data.cPassword;
+
+    this.setState({ isLoading: true });
+    await createUser(data)
+      .then(({ data }) => {
+        toast.success(data, { autoClose: 1000 });
+        this.setState({ isLoading: false });
+        setTimeout(async () => {
+          this.onReset();
+          window.location.reload();
+        }, 2000);
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+        this.setState({ isLoading: false });
+        this.onReset();
+      });
   };
 
   render() {
+    const { isLoading } = this.state;
     return (
       <div>
         <center>
@@ -133,14 +156,17 @@ export default class TravelAgentRegForm extends Form {
             <br />
             <br />
             <br />
-            {this.renderButton(
-              "Reset",
-              "contained",
-              "reset",
-              false,
-              this.onReset
-            )}
-            {this.renderButton("Submit", "contained", "submit")}
+            <span style={{ marginRight: "2rem" }}>
+              {this.renderButton(
+                "Reset",
+                "contained",
+                "reset",
+                false,
+                false,
+                this.onReset
+              )}
+            </span>
+            {this.renderButton("Submit", "contained", "submit", isLoading)}
           </form>
         </center>
       </div>
