@@ -10,6 +10,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { getAllTravelers } from "../../../services/travelerService";
 import TravelerCard from "../../travelerManagement/TravelerProfile/TravelerCard";
+import { getAllRequests } from "../../../services/accountRequestService";
+import RequestCard from "./RequestCard";
+import { Chip } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -57,6 +60,7 @@ export default class TravelAgentFunctions extends Component {
     searchValue: null,
     travelers: [],
     filteredTravelers: [],
+    requests: [],
   };
 
   componentDidMount = async () => {
@@ -66,6 +70,13 @@ export default class TravelAgentFunctions extends Component {
         this.filterTravelers(null, data);
       })
       .catch((err) => console.log(err));
+
+    const role = this.props.role;
+    if (role === "BackOfficeUser") {
+      await getAllRequests().then(({ data }) => {
+        this.setState({ requests: data });
+      });
+    }
   };
 
   handleInputChange = (e) => {
@@ -78,8 +89,9 @@ export default class TravelAgentFunctions extends Component {
   };
 
   render() {
-    const { searchValue, filteredTravelers } = this.state;
-    console.log(searchValue);
+    const { searchValue, filteredTravelers, requests } = this.state;
+    const role = this.props.role;
+    console.log(requests)
     return (
       <div
         style={{
@@ -122,7 +134,7 @@ export default class TravelAgentFunctions extends Component {
             {filteredTravelers.length > 0 ? (
               <div style={{ display: "flex", flexDirection: "row" }}>
                 {filteredTravelers.map((traveler) => (
-                  <TravelerCard traveler={traveler} />
+                  <TravelerCard traveler={traveler} role={role} />
                 ))}
               </div>
             ) : (
@@ -130,32 +142,58 @@ export default class TravelAgentFunctions extends Component {
             )}
           </AccordionDetails>
         </Accordion>
+        {role === "TravelAgent" ? (
+          <div>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2a-content"
+                id="panel2a-header"
+                sx={{ height: "5rem" }}
+              >
+                <Typography fontSize={22}>Create Traveler Account</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <TravelerRegForm user={this.props.user} />
+              </AccordionDetails>
+            </Accordion>
 
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
-            sx={{ height: "5rem" }}
-          >
-            <Typography fontSize={22}>Create Traveler Account</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TravelerRegForm user={this.props.user} />
-          </AccordionDetails>
-        </Accordion>
-
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
-            sx={{ height: "5rem" }}
-          >
-            <Typography fontSize={22}>Traveler Reservations</Typography>
-          </AccordionSummary>
-          <AccordionDetails></AccordionDetails>
-        </Accordion>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2a-content"
+                id="panel2a-header"
+                sx={{ height: "5rem" }}
+              >
+                <Typography fontSize={22}>Traveler Reservations</Typography>
+              </AccordionSummary>
+              <AccordionDetails></AccordionDetails>
+            </Accordion>
+          </div>
+        ) : (
+          <div>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2a-content"
+                id="panel2a-header"
+                sx={{ height: "5rem" }}
+              >
+                <Typography fontSize={22}>
+                  Traveler Account Activation Requests
+                </Typography>
+                <Chip label={requests.length >0 ? requests.length : "No Requests"} color="primary" variant="outlined" sx={{marginLeft:'1rem'}} />
+              </AccordionSummary>
+              <AccordionDetails>
+                {requests.length !== 0 ? (
+                  requests.map((req) => <RequestCard request={req} />)
+                ) : (
+                  <div>No Activation Requests</div>
+                )}
+              </AccordionDetails>
+            </Accordion>
+          </div>
+        )}
       </div>
     );
   }

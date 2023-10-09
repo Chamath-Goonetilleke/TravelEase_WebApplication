@@ -64,7 +64,7 @@ export default class App extends Component {
               authenticated={authenticated}
               user={currentUser}
             />
-            <Route path = '/traveler/:traveler' render={(props)=> <TravelerProfilePage user={currentUser} {...props} />} />
+            <Route path = '/traveler/:nic' render={(props)=> <TravelerProfilePage user={currentUser} {...props} />} />
             <Route path="/home" component={Home} />
             <Redirect to="/home" />
           </Switch>

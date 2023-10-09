@@ -14,6 +14,13 @@ export async function getAllTravelers() {
   });
 }
 
+export async function getTraveler(nic) {
+  const token = Cookies.get("token");
+  return await http.get(endpoint + `/getTraveler/${nic}`, {
+    headers: { Authorization: "Bearer " + token },
+  });
+}
+
 export async function updateTraveler(traveler) {
   const token = Cookies.get("token");
   return await http.put(endpoint + "/update", traveler, {
@@ -24,6 +31,20 @@ export async function updateTraveler(traveler) {
 export async function deleteTraveler(nic) {
   const token = Cookies.get("token");
   return await http.delete(endpoint + `/delete/${nic}`, {
+    headers: { Authorization: "Bearer " + token },
+  });
+}
+
+export async function activateAccount(nic) {
+  const token = Cookies.get("token");
+  return await http.get(endpoint + `/activateAccount/${nic}`, {
+    headers: { Authorization: "Bearer " + token },
+  });
+}
+
+export async function deActivateAccount(nic) {
+  const token = Cookies.get("token");
+  return await http.get(endpoint + `/deactivateAccount/${nic}`, {
     headers: { Authorization: "Bearer " + token },
   });
 }

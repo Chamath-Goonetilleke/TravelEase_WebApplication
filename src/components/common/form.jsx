@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import TextField from "@mui/material/TextField";
-import { Button, MenuItem, Select } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 class Form extends Component {
   state = {
@@ -105,22 +105,27 @@ class Form extends Component {
       </React.Fragment>
     );
   }
-  renderDropDown(label, name, options, disabled=false) {
+  renderDropDown(label, name, options, disabled=false, width) {
     const { data } = this.state;
     return (
-      <Select
-        label={label}
-        value={data[name]}
-        name={name}
-        onChange={this.handleChange}
-        disabled={disabled}
-      >
-        {options.map((option, index) => (
-          <MenuItem key={index} value={option.value}>
-            {option.text}
-          </MenuItem>
-        ))}
-      </Select>
+      <FormControl disabled={disabled} sx={{width:width}} >
+        <InputLabel  id="demo-simple-select-label">{label}</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          label={label}
+          value={data[name]}
+          name={name}
+          onChange={this.handleChange}
+          
+        >
+          {options.map((option, index) => (
+            <MenuItem key={index} value={option.value}>
+              {option.text}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     );
   }
   // renderDatePicker(lable, name) {

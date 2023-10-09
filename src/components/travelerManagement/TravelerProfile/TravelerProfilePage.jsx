@@ -1,14 +1,22 @@
-import { Avatar, Button, Fab } from "@mui/material";
+import { Avatar, Button, Chip, Fab } from "@mui/material";
 import React, { Component } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import { updateUser } from "../../../services/userService";
 import { toast } from "react-toastify";
 import UpdateTravelerForm from "./UpdateTravelerForm";
 import AlertDialog from "../../common/AlertDialog";
-import { deleteTraveler } from "../../../services/travelerService";
+import {
+  activateAccount,
+  deActivateAccount,
+  deleteTraveler,
+  getTraveler,
+} from "../../../services/travelerService";
+import TravelerFunctions from "./TravelerFunctions";
 
 export default class TravelerProfilePage extends Component {
   state = {
+    traveler: null,
+    role:null,
     avatarImage: null,
     isEnabled: false,
     deleteDialogOpen: false,
@@ -16,6 +24,17 @@ export default class TravelerProfilePage extends Component {
       title: "Delete Traveler Profile",
       text: "Are you sure you want to delete?",
     },
+  };
+
+  componentDidMount = async () => {
+    const nic = this.props.match.params.nic;
+
+    console.log(nic)
+    await getTraveler(nic)
+      .then(({data}) => {
+        this.setState({traveler:data, role:this.props.user.role})
+      })
+      .catch((err) => console.log(err));
   };
 
   handleImageChange = (event) => {
@@ -50,29 +69,68 @@ export default class TravelerProfilePage extends Component {
       });
   };
 
+  handleActivateAccount = async () => {
+    const nic = this.props.match.params.nic;
+    await activateAccount(nic)
+      .then(({ data }) => {
+        toast.success(data, { autoClose: 1000 });
+        this.setState({ isLoading: false });
+        setTimeout(async () => {
+          window.location = "/profile";
+        }, 2000);
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+        this.setState({ isLoading: false });
+        this.onReset();
+      });
+  };
+
+  handleDeactivateAccount = async () => {
+    const nic = this.props.match.params.nic;
+    await deActivateAccount(nic)
+      .then(({ data }) => {
+        toast.success(data, { autoClose: 1000 });
+        this.setState({ isLoading: false });
+        setTimeout(async () => {
+          window.location = "/profile";
+        }, 2000);
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+        this.setState({ isLoading: false });
+        this.onReset();
+      });
+  };
+
   handleDeleteTraveler = async () => {
-    const traveler = JSON.parse(this.props.match.params.traveler);
-     await deleteTraveler(traveler.nic)
-       .then(({ data }) => {
-         toast.success(data, { autoClose: 1000 });
-         this.setState({ isLoading: false });
-         setTimeout(async () => {
-           window.location = "/profile";
-         }, 2000);
-       })
-       .catch((err) => {
-         toast.error(err.response.data);
-         this.setState({ isLoading: false });
-         this.onReset();
-       });
-  }
+    const nic = this.props.match.params.nic;
+    await deleteTraveler(nic)
+      .then(({ data }) => {
+        toast.success(data, { autoClose: 1000 });
+        this.setState({ isLoading: false });
+        setTimeout(async () => {
+          window.location = "/profile";
+        }, 2000);
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+        this.setState({ isLoading: false });
+        this.onReset();
+      });
+  };
 
   render() {
-    const traveler = JSON.parse(this.props.match.params.traveler);
-    const { avatarImage, isEnabled, deleteDialogOpen, deleteMessage } =
-      this.state;
+    const {
+      avatarImage,
+      isEnabled,
+      deleteDialogOpen,
+      deleteMessage,
+      traveler,
+      role
+    } = this.state;
     return (
-      <div style={{ backgroundColor: "#ebebeb" }}>
+      traveler !== null && <div style={{ backgroundColor: "#ebebeb" }}>
         <div
           style={{
             display: "flex",
@@ -142,7 +200,7 @@ export default class TravelerProfilePage extends Component {
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: "18px", marginTop: "1rem", flex: 2 }}>
+                <div style={{ fontSize: "18px", flex: 2 }}>
                   <div>
                     {traveler.title +
                       " " +
@@ -152,6 +210,42 @@ export default class TravelerProfilePage extends Component {
                   </div>
                   <div>{traveler.email}</div>
                   <div>{"NIC : " + traveler.nic}</div>
+                  <div
+                    style={{
+                      marginTop: "15px",
+                      marginBottom: "-12px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    {traveler.state === 1 ? (
+                      <Chip label="Inactive" color="error" variant="outlined" />
+                    ) : (
+                      <Chip label="Active" color="primary" variant="outlined" />
+                    )}
+                    {role === "BackOfficeUser" &&
+                    traveler.state === 1 ? (
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        onClick={this.handleActivateAccount}
+                      >
+                        Activate
+                      </Button>
+                    ) : (
+                      role === "BackOfficeUser" &&
+                      traveler.state !== 1 && (
+                        <Button
+                          variant="outlined"
+                          size="small"
+                          color="error"
+                          onClick={this.handleDeactivateAccount}
+                        >
+                          Deactivate
+                        </Button>
+                      )
+                    )}
+                  </div>
                 </div>
                 <div
                   style={{
@@ -213,7 +307,9 @@ export default class TravelerProfilePage extends Component {
               boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.2)",
               display: "flex",
             }}
-          ></div>
+          >
+            <TravelerFunctions/>
+          </div>
         </div>
         <AlertDialog
           open={deleteDialogOpen}
