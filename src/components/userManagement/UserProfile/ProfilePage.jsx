@@ -6,7 +6,7 @@ import { updateUser } from "../../../services/userService";
 import { toast } from "react-toastify";
 import UpdateTravelAgent from "./UpdateTravelAgent";
 import TravelAgentFunctions from "./TravelAgentFunctons";
-import BackOfficeUserFunctions from "./BackOfficeUserFunctions";
+//import BackOfficeUserFunctions from "./BackOfficeUserFunctions";
 
 export default class ProfilePage extends Component {
   state = {
@@ -189,13 +189,14 @@ export default class ProfilePage extends Component {
               display: "flex",
             }}
           >
-            {user.role === "BackOfficeUser" ? (
+            {/* {user.role === "BackOfficeUser" ? (
               <BackOfficeUserFunctions/>
             ) : user.role === "TravelAgent" ? (
               <TravelAgentFunctions user={user} role={user.role} />
             ) : (
               <></>
-            )}
+            )} */}
+            <TravelAgentFunctions user={user} role={user.role} />
           </div>
         </div>
       </div>
