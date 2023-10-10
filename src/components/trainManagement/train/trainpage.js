@@ -16,7 +16,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default class trainpage extends Component {
+export default class TrainPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -104,7 +104,7 @@ export default class trainpage extends Component {
   };
   render() {
     return (
-      <div style={{margin: '80px'}}>
+      <div>
         <div>
           <Button
             variant="outlined"

@@ -1,23 +1,29 @@
 import { Button, Chip, Paper } from "@mui/material";
 import React from "react";
 
-export default function ClassCard ({className, price, available}){
+export default function ClassCard ({className, price, available, onClick}){
 
     return (
-      <Paper elevation={6} sx={{ display: "inline-block" , marginRight:'1rem'}}>
-        <Button sx={{ padding: 0 }}>
+      <Paper
+        elevation={6}
+        sx={{ display: "inline-block", marginRight: "1rem" }}
+      >
+        <Button
+          sx={{ padding: 0 }}
+          onClick={() => onClick({ className: className }, price)}
+        >
           <div>
             <div
               style={{
                 padding: "10px",
                 fontWeight: "bold",
-                marginBottom:'5px'
+                marginBottom: "5px",
               }}
             >
               {className}
             </div>
             <Chip
-              label={"LKR. "+price+".00"}
+              label={"LKR. " + price + ".00"}
               color="success"
               variant="outlined"
               sx={{ marginBottom: "20px" }}
