@@ -146,23 +146,23 @@ export default class TrainManagementTab extends Component {
                     ))}</TableCell>
                   <TableCell align="right">
                     <div>
-                      <Button
+                      {/* <Button
                         variant="outlined"
                         startIcon={<EditIcon />}
                         style={{marginRight: '5px'}}
-                      ></Button>
+                      ></Button> */}
                       <Button
                         variant="outlined"
                         startIcon={<RemoveRedEyeIcon />}
                         onClick={()=> this.handleScheduleDialogOpen(row.trainNo)}
                         style={{marginRight: '5px'}}
                       ></Button>
-                      <Button
+                      {/* <Button
                         variant="outlined"
                         startIcon={<SettingsApplicationsIcon />}
                         onClick={()=> this.handleControlPanelDialogClicked(row.id, row.status)}
                         
-                      ></Button>
+                      ></Button> */}
                     </div>
                   </TableCell>
                 </TableRow>

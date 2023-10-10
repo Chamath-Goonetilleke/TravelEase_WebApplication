@@ -10,7 +10,15 @@ import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import TextField from "@mui/material/TextField";
-import { getScheduleById, updateTrainSchedule } from "../../../services/scheduleService";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Chip from '@mui/material/Chip';
+
+import {
+  getScheduleById,
+  updateTrainSchedule,
+} from "../../../services/scheduleService";
+import ControlPanel from "../commonComponents/ControlPanel";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -77,6 +85,11 @@ export default class ScheduleManagementTab extends Component {
       schedule_id: "",
       status: 0,
       isAlertMsg: false,
+      resevation: {
+        resevationCount: 0,
+        totalPrice: 0,
+        isStatusChanged: false
+      },
     };
   }
   handleAlertClose = (event, reason) => {
@@ -88,6 +101,9 @@ export default class ScheduleManagementTab extends Component {
   };
   createData(name, trainNo, classes, reference) {
     return { name, trainNo, classes, reference };
+  }
+  handleDialogClose = ()=>{
+    this.props.callMainTrainFunction();
   }
   handleChange = (event) => {
     const {
@@ -142,7 +158,6 @@ export default class ScheduleManagementTab extends Component {
   };
   componentDidMount = () => {
     this.fetchSchedules();
-    
   };
 
   fetchSchedules = async () => {
@@ -159,21 +174,21 @@ export default class ScheduleManagementTab extends Component {
         stationsArray: data.stations,
         schedule_id: data.id,
         trainObject: data.train,
-        status: data.status
+        status: data.status,
       });
       console.log("this.state.schedules", this.state.schedules);
     } catch (error) {
       // Handle error if needed
       console.log(error);
     }
-    console.log("train_idtrain_idtrain_id=======",this.state.trainNo)
+    console.log("train_idtrain_idtrain_id=======", this.state.trainNo);
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    
+
     // this.handleDialogOpen();
     // this.getTrainDetails();
-    console.log("___________2 ",this.state.trainObject)
+    console.log("___________2 ", this.state.trainObject);
     const [, ...rest] = this.state.stationsArray;
     this.setState({ isAlertMsg: true });
     this.setState({ stationsArray: rest });
@@ -184,20 +199,28 @@ export default class ScheduleManagementTab extends Component {
       startTime: this.state.startTime,
       endStation: this.state.endStation,
       endTime: this.state.endTime,
-      stations: this.state.stationsArray.slice(1),
+      stations: this.state.stationsArray,
       train: this.state.trainObject,
-      Status: 0
+      Status: 0,
     };
     console.log("data::::: ", data);
     updateTrainSchedule(this.state.schedule_id, data)
-    .then(({ data }) => {
-      console.log("train", data)
-    })
-    .catch((err) => {
-      console.log(err)
-    });
+      .then(({ data }) => {
+        console.log("train", data);
+        this.props.callMainTrainFunction();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     this.setState({ isAlertMsg: true });
-    this.props.callMainTrainFunction();
+    
+  };
+  handleFieldChange = (index, field, value) => {
+    const updatedStationsArray = [...this.state.stationsArray];
+    updatedStationsArray[index][field] = value;
+    this.setState({ stationsArray: updatedStationsArray });
+    console.log("updatedStationsArray>>>>", updatedStationsArray);
+    console.log("updatedStationsArray>>>>", this.state.stationsArray);
   };
   render() {
     const { train_id } = this.props;
@@ -318,135 +341,130 @@ export default class ScheduleManagementTab extends Component {
             </div>
             <hr style={{ width: "65%" }} />
             {/* Dynamic array */}
-            {this.state.stationsArray.map((station, index) =>(
+            {this.state.stationsArray.map((station, index) => (
               <div style={{ width: "90%" }}>
-              <div>
-                <Grid container spacing={2}>
-                  <Grid item xs={3}>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="newStartStation"
-                      label="Start Station"
-                      type="text"
-                      name="newStartStation"
-                      fullWidth
-                      value={station.newStartStation}
-                      onChange={(e) =>
-                        this.setState({
-                          newRecord: {
-                            ...this.state.newRecord,
-                            newStartStation: e.target.value,
-                          },
-                        })
-                      }
-                      style={{ width: "200px" }}
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={3}>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="newStartTime"
-                      label="Start Time"
-                      type="text"
-                      name="newStartTime"
-                      fullWidth
-                      value={station.newStartTime}
-                      onChange={(e) =>
-                        this.setState({
-                          newRecord: {
-                            ...this.state.newRecord,
-                            newStartTime: e.target.value,
-                          },
-                        })
-                      }
-                      style={{ width: "200px" }}
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={2}>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="distance"
-                      label="Distance(Km)"
-                      type="text"
-                      name="distance"
-                      fullWidth
-                      value={station.distance}
-                      onChange={(e) =>
-                        this.setState({
-                          newRecord: {
-                            ...this.state.newRecord,
-                            distance: e.target.value,
-                          },
-                        })
-                      }
-                      style={{ width: "135px" }}
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={1} style={{ marginTop: "6px" }}>
+                <div>
+                  <Grid container spacing={2}>
+                    <Grid item xs={3}>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="newStartStation"
+                        label="Start Station"
+                        type="text"
+                        name="newStartStation"
+                        fullWidth
+                        value={station.newStartStation}
+                        onChange={(e) =>
+                          this.handleFieldChange(
+                            index,
+                            "newStartStation",
+                            e.target.value
+                          )
+                        }
+                        style={{ width: "200px" }}
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="newStartTime"
+                        label="Start Time"
+                        type="text"
+                        name="newStartTime"
+                        fullWidth
+                        value={station.newStartTime}
+                        onChange={(e) =>
+                          this.handleFieldChange(
+                            index,
+                            "newStartTime",
+                            e.target.value
+                          )
+                        }
+                        style={{ width: "200px" }}
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={2}>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="distance"
+                        label="Distance(Km)"
+                        type="text"
+                        name="distance"
+                        fullWidth
+                        value={station.distance}
+                        onChange={(e) =>
+                          this.handleFieldChange(
+                            index,
+                            "distance",
+                            parseInt(e.target.value, 10)
+                          )
+                        }
+                        style={{ width: "135px" }}
+                        size="small"
+                      />
+                    </Grid>
+                    {/* <Grid item xs={1} style={{ marginTop: "6px" }}>
                     <IconButton
                       aria-label="Example"
                       onClick={this.handleNewRecordToData}
                     >
                       <LibraryAddIcon />
                     </IconButton>
+                  </Grid> */}
                   </Grid>
-                </Grid>
+                </div>
+                <div>
+                  <Grid container spacing={2}>
+                    <Grid item xs={3}>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="newEndStation"
+                        label="End Station"
+                        type="text"
+                        name="newEndStation"
+                        fullWidth
+                        value={station.newEndStation}
+                        onChange={(e) =>
+                          this.handleFieldChange(
+                            index,
+                            "newEndStation",
+                            e.target.value
+                          )
+                        }
+                        style={{ width: "200px" }}
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="newEndTime"
+                        label="End Time"
+                        type="text"
+                        name="newEndTime"
+                        fullWidth
+                        value={station.newEndTime}
+                        onChange={(e) =>
+                          this.handleFieldChange(
+                            index,
+                            "newEndTime",
+                            e.target.value
+                          )
+                        }
+                        style={{ width: "200px" }}
+                        size="small"
+                      />
+                    </Grid>
+                  </Grid>
+                </div>
               </div>
-              <div>
-                <Grid container spacing={2}>
-                  <Grid item xs={3}>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="newEndStation"
-                      label="End Station"
-                      type="text"
-                      name="newEndStation"
-                      fullWidth
-                      value={station.newEndStation}
-                      onChange={(e) =>
-                        this.setState({
-                          newRecord: {
-                            ...this.state.newRecord,
-                            newEndStation: e.target.value,
-                          },
-                        })
-                      }
-                      style={{ width: "200px" }}
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={3}>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="newEndTime"
-                      label="End Time"
-                      type="text"
-                      name="newEndTime"
-                      fullWidth
-                      value={station.newEndTime}
-                      onChange={(e) =>
-                        this.setState({
-                          newRecord: {
-                            ...this.state.newRecord,
-                            newEndTime: e.target.value,
-                          },
-                        })
-                      }
-                      style={{ width: "200px" }}
-                      size="small"
-                    />
-                  </Grid>
-                </Grid>
-              </div>
-            </div>
             ))}
             <Button type="submit" color="primary">
               Submit
@@ -457,7 +475,46 @@ export default class ScheduleManagementTab extends Component {
             <div
               style={{ float: "right", marginTop: "-350px", width: "300px" }}
             >
-              
+              <div
+              >
+                <p style={{ textAlign: "center" }}>
+                  Available Reservation Summary
+                </p>
+                <div>
+                  {this.state.resevation != null ? (
+                    <div>
+                      <Paper
+                        elevation={3}
+                        style={{
+                          padding: "20px",
+                          textAlign: "center",
+                          margin: "20px auto",
+                          maxWidth: "300px",
+                        }}
+                      >
+                        <Typography variant="h6">
+                          Reservation Details
+                        </Typography>
+                        <Typography variant="body1" style={{textAlign: 'left'}}>
+                          Reservation Count: <span style={{textAlign: 'right'}}>{this.state.resevation.resevationCount}</span>
+                        </Typography>
+                        <Typography variant="body1" style={{textAlign: 'left'}}>
+                          Total Price: <span style={{textAlign: 'right'}}>${this.state.resevation.totalPrice}</span>
+                        </Typography>
+                      </Paper>
+                    </div>
+                  ) : (
+                    <div>test</div>
+                  )}
+                </div>
+                <div style={{margin: '0px'}}>
+                {/* ,pointerEvents: this.state.resevation.isStatusChanged ? '': 'none' */}
+                <Paper elevation={3}
+                        style={{
+                          textAlign: "center", width: '300px', padding: '1px'
+                        }}><ControlPanel train_id={this.state.train_id} train_status={this.state.train_status} handleControlPanelDialogClose={this.handleControlPanelDialogClose}/></Paper>
+                </div>
+              </div>
             </div>
           </form>
         </div>

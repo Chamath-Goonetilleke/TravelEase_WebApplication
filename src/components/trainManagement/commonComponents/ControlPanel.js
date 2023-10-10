@@ -57,12 +57,12 @@ class ControlPanel extends Component {
     const { train_id } = this.props;
 
     return (
-      <Box sx={{ width: "400px", maxWidth: 460, bgcolor: "background.paper" }}>
+      <Box sx={{ width: "300px", maxWidth: 360, bgcolor: "background.paper" }}>
         <Box sx={{ my: 3, mx: 2 }}>
           <Grid container alignItems="center">
             <Grid item xs>
-              <Typography gutterBottom variant="h4" component="div">
-                Control Panel
+              <Typography gutterBottom variant="h6" component="div" style={{textAlign: "left"}}>
+                Current Status
               </Typography>
             </Grid>
             <Grid item>
@@ -75,14 +75,14 @@ class ControlPanel extends Component {
               </Typography>
             </Grid>
           </Grid>
-          <Typography color="text.secondary" variant="body2">
+          {/* <Typography color="text.secondary" variant="body2">
             Update trains for reservations
-          </Typography>
+          </Typography> */}
         </Box>
         <Divider variant="middle" />
         <Box sx={{ m: 2 }}>
           <Typography gutterBottom variant="body1">
-            Select type{" "}
+            Select Status{" "}
             <Switch
               checked={checked}
               onChange={this.handleChange}
@@ -105,7 +105,7 @@ class ControlPanel extends Component {
           <Stack direction="row" spacing={1}></Stack>
         </Box>
         <Box sx={{ mt: 3, ml: 1, mb: 1 }}>
-          <Button onClick={this.updateTrainReservation}>Update</Button>
+          <Button onClick={this.updateTrainReservation} variant="outlined">Update</Button>
         </Box>
         <Snackbar
           open={this.state.isAlertMsg}
