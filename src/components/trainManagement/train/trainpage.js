@@ -7,6 +7,9 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import CreateSchedule from "./createSchedule";
 import CreateTrain from "./createTrain";
+import TrainManagementTab from "../schedule/TrainManagementTab";
+import ScheduleManagementTab from "../schedule/ScheduleManagementTab";
+
 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -65,6 +68,7 @@ export default class trainpage extends Component {
     this.setState({ open: true });
   };
   handleScheduleDialogOpen = () => {
+    this.setState({ isAlertMsg: true });
     this.setState({ scheduleIsOpen: true });
   };
 
@@ -72,6 +76,7 @@ export default class trainpage extends Component {
     this.setState({ open: false });
   };
   handleScheduleDialogClose = () => {
+    this.setState({ isAlertMsg: true });
     this.setState({ scheduleIsOpen: false });
   };
   handleAlertClose = (event, reason) => {
@@ -99,7 +104,7 @@ export default class trainpage extends Component {
   };
   render() {
     return (
-      <div>
+      <div style={{margin: '80px'}}>
         <div>
           <Button
             variant="outlined"
@@ -115,6 +120,12 @@ export default class trainpage extends Component {
           >
             Create Schedule
           </Button>
+          <div>
+
+          </div>
+          <div>
+            <TrainManagementTab/>
+          </div>
 
           <Dialog
             open={this.state.open}
@@ -149,7 +160,7 @@ export default class trainpage extends Component {
             severity="success"
             sx={{ width: "100%" }}
           >
-            This is a success message!
+            Successfully Created!
           </Alert>
         </Snackbar>
       </div>

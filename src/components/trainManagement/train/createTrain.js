@@ -13,6 +13,7 @@ import Stack from "@mui/material/Stack";
 import CreateSchedule from "./createSchedule";
 import IconButton from "@mui/material/IconButton";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import {createNewTrain} from "../../../services/trainService"
 
 export default class createTrain extends Component {
   constructor(props) {
@@ -33,11 +34,13 @@ export default class createTrain extends Component {
         {
           className: "",
           seatCount: 0,
+          availableCount: 0
         },
       ],
       newRecord: {
         className: "",
         seatCount: 0,
+        availableCount: 0
       },
     };
   }
@@ -49,15 +52,17 @@ export default class createTrain extends Component {
   };
   handleNewRecordToData = () => {
     const {className, seatCount} = this.state.newRecord;
+    const availableCount = 0
     const newFields = [
       ...this.state.stationsArray,
-      { className, seatCount },
+      { className, seatCount, availableCount },
     ];
     this.setState({
       stationsArray: newFields,
       newRecord: {
         className: "",
-        seatCount: 0
+        seatCount: 0,
+        availableCount: 0
       },
     });
   };
@@ -95,8 +100,14 @@ export default class createTrain extends Component {
       classes: this.state.stationsArray.slice(1)
     };
     console.log("data: ", data);
+    createNewTrain(data)
+    .then(({ data }) => {
+      console.log("train", data)
+    })
+    .catch((err) => {
+      console.log(err)
+    });
     this.handleDialogClose();
-    this.setState({ isAlertMsg: true });
     this.props.handleScheduleDialogOpen();
   };
   render() {

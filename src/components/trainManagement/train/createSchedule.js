@@ -10,6 +10,47 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import Chip from "@mui/material/Chip";
+import { getTrainById, getAllTrains } from "../../../services/trainService";
+import { createNewSchedule } from "../../../services/scheduleService";
+
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const names = [
+  'Oliver Hansen',
+  'Van Henry',
+  'April Tucker',
+  'Ralph Hubbard',
+  'Omar Alexander',
+  'Carlos Abbott',
+  'Miriam Wagner',
+  'Bradley Wilkerson',
+  'Virginia Andrews',
+  'Kelly Snyder',
+];
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
 export default class createSchedule extends Component {
   constructor(props) {
@@ -22,7 +63,7 @@ export default class createSchedule extends Component {
       startStation: "",
       endTime: "",
       endStation: "",
-      weekType: "Weekday",
+      weekType: "",
       trainNumbers: ["123", "456", "789"],
       weekOrWeekend: ["Weekday", "Weekend"],
       newStartStation: "",
@@ -43,13 +84,58 @@ export default class createSchedule extends Component {
         newEndTime: "",
         distance: 0,
       },
+      trainObject: null,
+      trainList: [],
+      dailytypes: [],
+      names: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      train_id: "",
     };
   }
+  handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    
+    // On autofill we get a stringified value.
+    this.setState({
+      dailytypes: typeof value === 'string' ? value.split(',') : value,
+    });
+    console.log(">>>>>>>>>>>>>>>>>>>>", this.state.dailytypes);
+  };
+  getTrainDetails = (value) => {
+    // alert(">>> >>> ",this.state.train_id);
+    getTrainById(value)
+      .then(({ data }) => {
+        console.log("___________::::: ",data)
+        this.setState({ trainObject: data });
+        console.log("::::::::",this.state.trainObject )
+        console.log("::::::::",this.state.trainObject )
+      })
+      .catch((err) => console.log("Train Details Fetching Failed", err));
+  };
   handleInputChange = (event) => {
     let { name, value } = event.target;
     this.setState({
       [name]: value,
     });
+  };
+  handleInputChangeTrain = (event) => {
+    let { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    });
+    console.log("mmmmmmmmm", value)
+    // this.getTrainDetails();
+    this.getTrainDetails(value);
+  };
+  componentDidMount = async () => {
+    await getAllTrains()
+      .then(({ data }) => {
+        console.log(">>>>>>>>>>>", data);
+        this.setState({ trainList: data });
+        // this.getTrainDetails();
+      })
+      .catch((err) => console.log(err));
   };
 
   handleDialogOpen = () => {
@@ -84,19 +170,31 @@ export default class createSchedule extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    
     this.handleDialogOpen();
+    this.getTrainDetails();
+    console.log("___________2 ",this.state.trainObject)
     const [, ...rest] = this.state.stationsArray;
     this.setState({ stationsArray: rest });
     const data = {
-      trainNo: this.state.trainNo,
-      weekType: this.state.weekType,
+      trainNo: this.state.trainObject.trainNo,
+      weekType: this.state.dailytypes,
       startStation: this.state.startStation,
       startTime: this.state.startTime,
       endStation: this.state.endStation,
       endTime: this.state.endTime,
       stations: this.state.stationsArray.slice(1),
+      train: this.state.trainObject,
+      Status: 0
     };
     console.log("data: ", data);
+    createNewSchedule(data)
+    .then(({ data }) => {
+      console.log("train", data)
+    })
+    .catch((err) => {
+      console.log(err)
+    });
     this.props.callMainTrainFunction();
   };
   render() {
@@ -114,19 +212,19 @@ export default class createSchedule extends Component {
                           label="Train Number"
                           variant="standard"
                           select
-                          name="trainNo"
-                          value={this.state.trainNo}
-                          onChange={this.handleInputChange}
+                          name="train_id"
+                          value={this.state.train_id}
+                          onChange={this.handleInputChangeTrain}
                           SelectProps={{
                             native: true,
                           }}
                           required
-                          style={{ width: "300px" }}
+                          style={{ width: "300px", marginTop: '10px' }}
                         >
                           <option value="Train Number">Train Number</option>
-                          {this.state.trainNumbers.map((number) => (
-                            <option key={number} value={number}>
-                              {number}
+                          {this.state.trainList.map((number) => (
+                            <option key={number.id} value={number.id}>
+                              {number.trainNo}
                             </option>
                           ))}
                         </TextField>
@@ -134,26 +232,28 @@ export default class createSchedule extends Component {
                     </Grid>
                     <Grid item xs={4}>
                       <div>
-                        <TextField
-                          label="Weekend /Weekend"
-                          variant="standard"
-                          select
-                          name="weekType"
-                          value={this.state.weekType}
-                          onChange={this.handleInputChange}
-                          SelectProps={{
-                            native: true,
-                          }}
-                          required
-                          style={{ width: "300px" }}
+                        <InputLabel id="demo-multiple-name-label">
+                          Type
+                        </InputLabel>
+                        <Select
+                          labelId="demo-multiple-name-label"
+                          id="demo-multiple-name"
+                          multiple
+                          value={this.state.dailytypes}
+                          onChange={this.handleChange}
+                          input={<OutlinedInput label="Type" />}
+                          MenuProps={MenuProps}
+                          style={{width: '300px', height: '40px'}}
                         >
-                          <option value="Select Type">Select Type</option>
-                          {this.state.weekOrWeekend.map((number) => (
-                            <option key={number} value={number}>
-                              {number}
-                            </option>
+                          {this.state.names.map((name) => (
+                            <MenuItem
+                              key={name}
+                              value={name}
+                            >
+                              {name}
+                            </MenuItem>
                           ))}
-                        </TextField>
+                        </Select>
                       </div>
                     </Grid>
                   </Grid>
@@ -302,15 +402,13 @@ export default class createSchedule extends Component {
                           size="small"
                         />
                       </Grid>
-                      <Grid
-                        item
-                        xs={1}
-                        style={{ marginTop: "6px" }}
-                      >
-                        <IconButton aria-label="Example" onClick={this.handleNewRecordToData}>
-                        <LibraryAddIcon />
+                      <Grid item xs={1} style={{ marginTop: "6px" }}>
+                        <IconButton
+                          aria-label="Example"
+                          onClick={this.handleNewRecordToData}
+                        >
+                          <LibraryAddIcon />
                         </IconButton>
-                        
                       </Grid>
                     </Grid>
                   </div>
