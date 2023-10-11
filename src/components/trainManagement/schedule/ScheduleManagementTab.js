@@ -499,7 +499,7 @@ export default class ScheduleManagementTab extends Component {
                           Reservation Count: <span style={{textAlign: 'right'}}>{this.state.resevation.resevationCount}</span>
                         </Typography>
                         <Typography variant="body1" style={{textAlign: 'left'}}>
-                          Total Price: <span style={{textAlign: 'right'}}>${this.state.resevation.totalPrice}</span>
+                          Total Price: <span style={{textAlign: 'right'}}>Rs.{this.state.resevation.totalPrice}</span>
                         </Typography>
                       </Paper>
                     </div>

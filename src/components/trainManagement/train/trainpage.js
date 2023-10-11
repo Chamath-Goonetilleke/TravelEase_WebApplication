@@ -68,7 +68,7 @@ export default class trainpage extends Component {
     this.setState({ open: true });
   };
   handleScheduleDialogOpen = () => {
-    this.setState({ isAlertMsg: true });
+    // this.setState({ isAlertMsg: true });
     this.setState({ scheduleIsOpen: true });
   };
 
@@ -76,7 +76,7 @@ export default class trainpage extends Component {
     this.setState({ open: false });
   };
   handleScheduleDialogClose = () => {
-    this.setState({ isAlertMsg: true });
+    // this.setState({ isAlertMsg: true });
     this.setState({ scheduleIsOpen: false });
   };
   handleAlertClose = (event, reason) => {
@@ -106,6 +106,8 @@ export default class trainpage extends Component {
     return (
       <div style={{margin: '80px'}}>
         <div>
+          
+          <div style={{float: 'right', marginRight: '30px'}}>
           <Button
             variant="outlined"
             color="primary"
@@ -120,8 +122,6 @@ export default class trainpage extends Component {
           >
             Create Schedule
           </Button>
-          <div>
-
           </div>
           <div>
             <TrainManagementTab/>
