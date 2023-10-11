@@ -17,4 +17,13 @@ export async function checkTrainReservationById(id) {
 export async function updateTrainSchedule(id, data) {
     return await http.post(endpoint + "/update-schedule/"+id, data);
 }
+export async function updateScheduleTrainSchedule(id, data) {
+    return await http.post(endpoint + "/update-schedule/"+id, data);
+}
+export async function updateTrainStatus(id, status) {
+    return await http.patch(endpoint + "/update-train-status/"+id+"/"+status);
+}
+export async function updateScheduleTrainStatus(id, status) {
+    return await http.patch(endpoint + "/update-schedule-status/"+id+"/"+status);
+}
 

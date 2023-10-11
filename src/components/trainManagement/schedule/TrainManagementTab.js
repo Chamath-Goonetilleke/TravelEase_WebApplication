@@ -21,6 +21,8 @@ import ScheduleManagementTab from "./ScheduleManagementTab";
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import ControlPanel from "../commonComponents/ControlPanel";
 import { getScheduleById } from "../../../services/scheduleService";
+import TrainStatusControl from "../commonComponents/TrainStatusControl";
+
 
 
 function createData(name, trainNo, classes, reference) {
@@ -131,11 +133,10 @@ export default class TrainManagementTab extends Component {
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
-                    {row.id}
-                  </TableCell>
-                  <TableCell align="right">{row.name}</TableCell>
                   <TableCell align="right">{row.trainNo}</TableCell>
+                  
+                  <TableCell align="right">{row.name}</TableCell>
+                  
                   <TableCell align="right">{row.classes.map((classItem, index) => (
                       <Chip
                         key={index}
@@ -144,6 +145,13 @@ export default class TrainManagementTab extends Component {
                         style={{ margin: "5px",marginTop: '15px',width: '150px' }}
                       />
                     ))}</TableCell>
+                    <TableCell component="th" scope="row">
+                    {row.status ? (
+                  <Chip color="success" label="ACTIVE" style={{width: '100px'}} />
+                ) : (
+                  <Chip color="warning" label="INACTIVE" style={{width: '100px'}} />
+                )}
+                  </TableCell>
                   <TableCell align="right">
                     <div>
                       {/* <Button
@@ -157,12 +165,12 @@ export default class TrainManagementTab extends Component {
                         onClick={()=> this.handleScheduleDialogOpen(row.trainNo)}
                         style={{marginRight: '5px'}}
                       ></Button>
-                      {/* <Button
+                      <Button
                         variant="outlined"
                         startIcon={<SettingsApplicationsIcon />}
                         onClick={()=> this.handleControlPanelDialogClicked(row.id, row.status)}
                         
-                      ></Button> */}
+                      ></Button>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -191,7 +199,7 @@ export default class TrainManagementTab extends Component {
             maxWidth="sm"
           >
             <DialogTitle></DialogTitle>
-            <ControlPanel train_id={this.state.train_id} train_status={this.state.train_status} handleControlPanelDialogClose={this.handleControlPanelDialogClose}/>
+            <TrainStatusControl train_id={this.state.train_id} train_status={this.state.train_status} handleControlPanelDialogClose={this.handleControlPanelDialogClose}/>
           </Dialog>
         </div>
       </div>

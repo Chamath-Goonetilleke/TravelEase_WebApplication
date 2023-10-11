@@ -173,7 +173,8 @@ export default class createSchedule extends Component {
       endTime: this.state.endTime,
       stations: this.state.stationsArray.slice(1),
       train: this.state.trainObject,
-      Status: 0
+      IsPublished: true,
+      IsCancled: false
     };
     console.log("data: ", data);
     createNewSchedule(data)

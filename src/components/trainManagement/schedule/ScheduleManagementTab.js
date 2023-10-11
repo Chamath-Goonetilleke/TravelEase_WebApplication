@@ -14,11 +14,13 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Chip from '@mui/material/Chip';
 
+
 import {
   getScheduleById,
   updateTrainSchedule,
 } from "../../../services/scheduleService";
 import ControlPanel from "../commonComponents/ControlPanel";
+import ControlSchedulePanel from "../commonComponents/ControlSchedulePanel";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -82,7 +84,7 @@ export default class ScheduleManagementTab extends Component {
         "Saturday",
       ],
       trainNo: this.props.trainNo,
-      schedule_id: "",
+      scheduleId: "",
       status: 0,
       isAlertMsg: false,
       resevation: {
@@ -172,16 +174,16 @@ export default class ScheduleManagementTab extends Component {
         endStation: data.endStation,
         endTime: data.endTime,
         stationsArray: data.stations,
-        schedule_id: data.id,
+        scheduleId: data.id,
         trainObject: data.train,
         status: data.status,
       });
-      console.log("this.state.schedules", this.state.schedules);
+      console.log("this.state.schedulesss123", this.state.scheduleId);
+      console.log("this.state.schedulesss123", this.state.status);
     } catch (error) {
       // Handle error if needed
       console.log(error);
     }
-    console.log("train_idtrain_idtrain_id=======", this.state.trainNo);
   };
   handleSubmit = (event) => {
     event.preventDefault();
@@ -204,7 +206,7 @@ export default class ScheduleManagementTab extends Component {
       Status: 0,
     };
     console.log("data::::: ", data);
-    updateTrainSchedule(this.state.schedule_id, data)
+    updateTrainSchedule(this.state.scheduleId, data)
       .then(({ data }) => {
         console.log("train", data);
         this.props.callMainTrainFunction();
@@ -473,7 +475,7 @@ export default class ScheduleManagementTab extends Component {
               Close
             </Button>
             <div
-              style={{ float: "right", marginTop: "-350px", width: "300px" }}
+              style={{ float: "right", marginTop: "-70%", width: "300px" }}
             >
               <div
               >
@@ -506,13 +508,20 @@ export default class ScheduleManagementTab extends Component {
                   ) : (
                     <div>test</div>
                   )}
+                  <div style={{margin: '0px'}}>
+                {/* ,pointerEvents: this.state.resevation.isStatusChanged ? '': 'none' */}
+                <Paper elevation={3}
+                        style={{
+                          textAlign: "center", width: '300px', padding: '1px', marginBottom: '30px'
+                        }}><ControlSchedulePanel scheduleId={this.state.scheduleId} train_status={this.state.train_status} handleControlPanelDialogClose={this.handleControlPanelDialogClose}/></Paper>
+                </div>
                 </div>
                 <div style={{margin: '0px'}}>
                 {/* ,pointerEvents: this.state.resevation.isStatusChanged ? '': 'none' */}
                 <Paper elevation={3}
                         style={{
                           textAlign: "center", width: '300px', padding: '1px'
-                        }}><ControlPanel train_id={this.state.train_id} train_status={this.state.train_status} handleControlPanelDialogClose={this.handleControlPanelDialogClose}/></Paper>
+                        }}><ControlPanel scheduleId={this.state.scheduleId} train_status={this.state.train_status} handleControlPanelDialogClose={this.handleControlPanelDialogClose}/></Paper>
                 </div>
               </div>
             </div>

@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c737031-8624-4234-91d1-5d7b1d6d153c" name="Changes" comment="IT20122096 - reservation and add train management to profile">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="6c737031-8624-4234-91d1-5d7b1d6d153c" name="Changes" comment="Madushan S H K --implement reservation train status update UI">
+      <change beforePath="$PROJECT_DIR$/src/components/trainManagement/schedule/TrainManagementTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/trainManagement/schedule/TrainManagementTab.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/trainManagement/train/createSchedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/trainManagement/train/createSchedule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/scheduleService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/scheduleService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,15 +30,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "developer",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;developer&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
