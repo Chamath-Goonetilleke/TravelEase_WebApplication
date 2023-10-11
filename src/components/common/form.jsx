@@ -30,7 +30,6 @@ class Form extends Component {
   }
 
   handleChange = (e) => {
-    console.log("e", e);
     let target = {};
     if (e.currentTarget) {
       target = e.currentTarget;

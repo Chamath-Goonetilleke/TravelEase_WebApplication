@@ -28,8 +28,6 @@ export default class TravelerProfilePage extends Component {
 
   componentDidMount = async () => {
     const nic = this.props.match.params.nic;
-
-    console.log(nic)
     await getTraveler(nic)
       .then(({data}) => {
         this.setState({traveler:data, role:this.props.user.role})
@@ -308,7 +306,7 @@ export default class TravelerProfilePage extends Component {
               display: "flex",
             }}
           >
-            <TravelerFunctions/>
+            <TravelerFunctions travelerNIC = {traveler.nic} />
           </div>
         </div>
         <AlertDialog

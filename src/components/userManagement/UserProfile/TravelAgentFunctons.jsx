@@ -13,6 +13,7 @@ import TravelerCard from "../../travelerManagement/TravelerProfile/TravelerCard"
 import { getAllRequests } from "../../../services/accountRequestService";
 import RequestCard from "./RequestCard";
 import { Chip } from "@mui/material";
+import TrainPage from "../../trainManagement/train/trainpage";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -182,7 +183,12 @@ export default class TravelAgentFunctions extends Component {
                 <Typography fontSize={22}>
                   Traveler Account Activation Requests
                 </Typography>
-                <Chip label={requests.length >0 ? requests.length : "No Requests"} color="primary" variant="outlined" sx={{marginLeft:'1rem'}} />
+                <Chip
+                  label={requests.length > 0 ? requests.length : "No Requests"}
+                  color="primary"
+                  variant="outlined"
+                  sx={{ marginLeft: "1rem" }}
+                />
               </AccordionSummary>
               <AccordionDetails>
                 {requests.length !== 0 ? (
@@ -190,6 +196,19 @@ export default class TravelAgentFunctions extends Component {
                 ) : (
                   <div>No Activation Requests</div>
                 )}
+              </AccordionDetails>
+            </Accordion>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2a-content"
+                id="panel2a-header"
+                sx={{ height: "5rem" }}
+              >
+                <Typography fontSize={22}>Train Management</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <TrainPage/>
               </AccordionDetails>
             </Accordion>
           </div>

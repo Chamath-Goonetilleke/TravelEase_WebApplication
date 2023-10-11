@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Route, Switch, Redirect } from "react-router-dom";
-import Trainpage from './components/trainManagement/train/trainpage';
+import TrainPage from './components/trainManagement/train/trainpage';
 import { ToastContainer, Zoom } from "react-toastify";
 
 import AppHeader from "./components/common/Header";
@@ -68,7 +68,7 @@ export default class App extends Component {
             />
             <Route path = '/traveler/:nic' render={(props)=> <TravelerProfilePage user={currentUser} {...props} />} />
             <Route path="/home" component={Home} />
-            <Route path="/schedule-train" component={Trainpage}></Route>
+            <Route path="/schedule-train" component={TrainPage}></Route>
             <Redirect to="/home" />
             
           </Switch>

@@ -7,29 +7,35 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-export default function TicketSummaryComponent() {
+export default function TicketSummaryComponent({ schedule, passengers, selectedClass }) {
   const trainInfo = {
-    trainName: "8057 Express Train",
-    startStation: "Colombo Fort",
-    endStation: "Galle",
-    departureDate: "2023-10-13",
-    timeStartEnd: "07:14 - 09:29",
-    numOfPassengers: 1,
-    trainClassSelected: "Air Conditioned Saloon",
-    priceOnePerson: 1100,
-    total: 1000,
+    trainName: schedule.name,
+    startStation: schedule.from,
+    endStation: schedule.to,
+    departureDate: schedule.date,
+    timeStartEnd: schedule.departs + "-" + schedule.arrives,
+    numOfPassengers: passengers + 1,
+    trainClassSelected: selectedClass.name,
+    priceOnePerson: selectedClass.price,
+    total: selectedClass.price * (passengers + 1),
   };
   const rowStyles = {
-    // Adjust the height as needed
-    height: "5px", // Set your desired row height here
+    height: "5px",
   };
 
   return (
-    <Paper elevation={5}>
+    <Paper elevation={0}>
       <TableContainer>
-        <Table aria-label="Train Information">
+        <Table
+          aria-label="Train Information"
+          size="small"
+        >
           <TableHead>
-            <TableRow>
+            <TableRow
+              style={{
+                height: 20,
+              }}
+            >
               <TableCell sx={{ fontWeight: "bold", fontSize: "16px" }}>
                 Information
               </TableCell>

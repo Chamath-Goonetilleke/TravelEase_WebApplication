@@ -2,18 +2,14 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "../../common/form";
 import stations from "../../common/trainStations";
-import dayjs from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { FormControlLabel, Switch } from "@mui/material";
 export default class InitialDetails extends Form {
   state = {
     data: this.props.initial,
     errors: {},
-    isReturn: false,
-    returnData: null,
   };
 
   schema = {
@@ -55,9 +51,9 @@ export default class InitialDetails extends Form {
   };
 
   render() {
-    const { isReturn, data, returnData } = this.state;
+    const {data} = this.state;
     return (
-      <div style={{ marginBottom: "2rem", marginTop: "2rem" }}>
+      <div style={{ marginTop: "2rem" }}>
         <form onSubmit={this.handleSubmit}>
           <div
             style={{
@@ -75,9 +71,8 @@ export default class InitialDetails extends Form {
                   label="Date"
                   value={data.date}
                   onChange={(e) => {
-                    data.date = e
-                    this.setState({data:data})
-
+                    data.date = e;
+                    this.setState({ data: data });
                   }}
                   shouldDisableDate={this.shouldDisableDate}
                 />
@@ -102,33 +97,14 @@ export default class InitialDetails extends Form {
                 "No of Passengers",
                 "noOfPassengers",
                 "number",
-                { width: "80%", marginRight: "2rem" },
+                { width: "100%", marginRight: "2rem" },
                 true
               )}
-              <FormControlLabel
-                control={
-                  <Switch
-                    value={isReturn}
-                    onChange={() => this.setState({ isReturn: !isReturn })}
-                  />
-                }
-                label="Return"
-              />
             </div>
-            {isReturn && (
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={["DatePicker", "DatePicker"]}>
-                  <DatePicker
-                    label="Return Date"
-                    value={returnData}
-                    onChange={(e) => this.setState({ date: e })}
-                    shouldDisableDate={this.shouldDisableDate}
-                  />
-                </DemoContainer>
-              </LocalizationProvider>
-            )}
           </div>
-          {this.renderButton("Search", "outlined", "submit")}
+          <div style={{ display: "flex", justifyContent: "end" }}>
+            {this.renderButton("Search", "outlined", "submit")}
+          </div>
         </form>
       </div>
     );
