@@ -28,7 +28,7 @@ export default class TravelerFunctions extends Component {
             <Typography fontSize={22}>Add New Reservation</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <ReservationStepper/>
+            <ReservationStepper travelerNIC={this.props.travelerNIC} />
           </AccordionDetails>
         </Accordion>
 

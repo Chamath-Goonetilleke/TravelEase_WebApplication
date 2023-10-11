@@ -304,7 +304,7 @@ export default function AvailableTrainsTables({ schedules, onSelectSchedule }) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
+
         <EnhancedTableToolbar
           numSelected={selected.length}
           handleRemove={handleRemove}
@@ -388,7 +388,7 @@ export default function AvailableTrainsTables({ schedules, onSelectSchedule }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
           sx={{ marginTop: "2rem" }}
         />
-      </Paper>
+
     </Box>
   );
 }

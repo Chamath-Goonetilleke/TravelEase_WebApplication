@@ -19,6 +19,11 @@ export default class PaymentForm extends Form {
     exp: Joi.string().required().label("Expiration"),
   };
 
+  doSubmit = () => {
+    const paymentData = this.state.data
+    this.props.handleSubmit(paymentData);
+  };
+
   render() {
     const { reservation } = this.props;
 
@@ -47,51 +52,58 @@ export default class PaymentForm extends Form {
             </div>
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <form onSubmit={this.handleSubmit}>
-            {this.renderInputField(
-              "Card Name",
-              "name",
-              "text",
-              { marginRight: "1rem" },
-              true
-            )}
-            <br />
-            <br />
-            {this.renderInputField(
-              "Card Number",
-              "cardNumber",
-              "number",
-              { marginRight: "1rem" },
-              true
-            )}
-            {this.renderInputField(
-              "CVC",
-              "cvc",
-              "text",
-              { marginRight: "1rem" },
-              true
-            )}
-            {this.renderInputField(
-              "Expiration",
-              "exp",
-              "text",
-              { },
-              true
-            )}
-            <br />
-            <br />
-            <div style={{ display:"flex", justifyContent:"end"}} >
-              {this.renderButton("pay", "contained", "submit", false, false)}
+
+        <form onSubmit={this.handleSubmit}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div>
+              {this.renderInputField(
+                "Card Name",
+                "name",
+                "text",
+                { marginRight: "1rem" },
+                true
+              )}
+              <br />
+              <br />
+              {this.renderInputField(
+                "Card Number",
+                "cardNumber",
+                "number",
+                { marginRight: "1rem" },
+                true
+              )}
+              {this.renderInputField(
+                "CVC",
+                "cvc",
+                "text",
+                { marginRight: "1rem" },
+                true
+              )}
+              {this.renderInputField("Expiration", "exp", "text", {}, true)}
             </div>
-          </form>
-        </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              marginTop: "3rem",
+            }}
+          >
+            {this.renderButton(
+              "pay and Book tickets",
+              "contained",
+              "submit",
+              this.props.isButtonLoading
+            )}
+          </div>
+        </form>
       </div>
     );
   }

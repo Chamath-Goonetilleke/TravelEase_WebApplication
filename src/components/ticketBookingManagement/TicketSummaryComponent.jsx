@@ -20,14 +20,16 @@ export default function TicketSummaryComponent({ schedule, passengers, selectedC
     total: selectedClass.price * (passengers + 1),
   };
   const rowStyles = {
-    // Adjust the height as needed
-    height: "5px", // Set your desired row height here
+    height: "5px",
   };
 
   return (
-    <Paper elevation={5}>
+    <Paper elevation={0}>
       <TableContainer>
-        <Table aria-label="Train Information">
+        <Table
+          aria-label="Train Information"
+          size="small"
+        >
           <TableHead>
             <TableRow
               style={{

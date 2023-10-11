@@ -3,9 +3,13 @@ import InitialDetails from "./stepperSteps/InitialDetails";
 import CheckAvailability from "./stepperSteps/CheckAvailability";
 import ConfirmationAndPayment from "./stepperSteps/ConfirmationAndPayment";
 import PassengerInformation from "./stepperSteps/PassengerInformation";
-import TicketSummary from "./stepperSteps/TicketSummary";
-import { getAllSchedules } from "../../services/reservationService";
+import {
+  createNewReservation,
+  getAllSchedules,
+} from "../../services/reservationService";
 import PaymentForm from "./stepperSteps/PaymentForm";
+import { toast } from "react-toastify";
+import { Paper } from "@mui/material";
 
 export default class StepperBody extends Component {
   state = {
@@ -15,6 +19,7 @@ export default class StepperBody extends Component {
     selectedSchedule: {},
     passengers: [],
     reservation: {},
+    isLoading: false,
   };
 
   componentDidMount = async () => {
@@ -58,6 +63,7 @@ export default class StepperBody extends Component {
       }
     });
     this.setState({ filteredSchedules: availableSchedules });
+    this.props.nextHandle();
   };
 
   calculateTotalDistance(startIndex, endIndex, stations) {
@@ -85,7 +91,33 @@ export default class StepperBody extends Component {
   getReservation = (reservation) => {
     reservation.passengers = this.state.passengers;
     console.log("res", reservation);
+
     this.setState({ reservation: reservation });
+  };
+
+  handleSubmitReservation = async (paymentData) => {
+    this.setState({ isLoading: true });
+
+    const reservation = this.state.reservation;
+    reservation.isTravelerCreated = false;
+    reservation.travelerNIC = this.props.travelerNIC;
+    reservation.trainNo = reservation.trainNo + "";
+    reservation.classPrice = reservation.classPrice + "";
+    reservation.totalPrice = reservation.totalPrice + "";
+
+    await createNewReservation(reservation)
+      .then(({ data }) => {
+        toast.success(data, { autoClose: 1000 });
+        this.setState({ isLoading: false });
+        setTimeout(async () => {
+          this.props.getReservationSummary(reservation);
+          this.props.nextHandle();
+        }, 2000);
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+        this.setState({ isLoading: false });
+      });
   };
 
   render() {
@@ -96,42 +128,48 @@ export default class StepperBody extends Component {
       selectedSchedule,
       passengers,
       reservation,
+      isLoading,
     } = this.state;
     return (
-      <div
-        style={{
-          border: "1px solid black",
-          padding: "1rem",
-          marginTop: "2rem",
-        }}
-      >
-        {activeStep === 0 ? (
-          <InitialDetails
-            initial={initialDetails}
-            onChangeData={this.handleInitialDetails}
-          />
-        ) : activeStep === 1 ? (
-          <CheckAvailability
-            schedules={filteredSchedules}
-            onSelectSchedule={this.handleSelectSchedule}
-          />
-        ) : activeStep === 3 ? (
-          <ConfirmationAndPayment
-            schedule={selectedSchedule}
-            passengers={passengers.length}
-            getReservation={this.getReservation}
-          />
-        ) : activeStep === 2 ? (
-          <PassengerInformation
-            numOfPassengers={initialDetails.noOfPassengers}
-            onAddPassenger={this.handlePassengers}
-          />
-        ) : activeStep === 4 ? (
-          <PaymentForm reservation={reservation} />
-        ) : (
-          <></>
-        )}
-      </div>
+      <Paper elevation={8} >
+        <div
+          style={{
+            padding: "1rem",
+            marginTop: "2rem",
+          }}
+        >
+          {activeStep === 0 ? (
+            <InitialDetails
+              initial={initialDetails}
+              onChangeData={this.handleInitialDetails}
+            />
+          ) : activeStep === 1 ? (
+            <CheckAvailability
+              schedules={filteredSchedules}
+              onSelectSchedule={this.handleSelectSchedule}
+            />
+          ) : activeStep === 3 ? (
+            <ConfirmationAndPayment
+              schedule={selectedSchedule}
+              passengers={passengers.length}
+              getReservation={this.getReservation}
+            />
+          ) : activeStep === 2 ? (
+            <PassengerInformation
+              numOfPassengers={initialDetails.noOfPassengers}
+              onAddPassenger={this.handlePassengers}
+            />
+          ) : activeStep === 4 ? (
+            <PaymentForm
+              reservation={reservation}
+              isButtonLoading={isLoading}
+              handleSubmit={this.handleSubmitReservation}
+            />
+          ) : (
+            <></>
+          )}
+        </div>
+      </Paper>
     );
   }
 }

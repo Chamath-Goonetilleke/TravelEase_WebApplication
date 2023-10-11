@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
 import { Fab, TextField } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import AddIcon from "@mui/icons-material/Add";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 const style = {
   width: "100%",
@@ -110,7 +109,25 @@ export default class PassengerInformation extends Component {
                   </div>
                 </ListItem>
               ) : (
-                <div>All Passengers are Added.</div>
+                <div
+                  style={{
+                    padding: "1rem",
+                    marginTop: "2rem",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "green",
+                  }}
+                >
+                  <TaskAltIcon
+                    style={{
+                      color: "green",
+                      fontSize: "50px",
+                      marginRight: "1rem",
+                    }}
+                  />
+                  <h5>All Passengers Added.</h5>
+                </div>
               )}
             </List>
           </div>
