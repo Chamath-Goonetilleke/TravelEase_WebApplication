@@ -176,7 +176,7 @@ export default class ScheduleManagementTab extends Component {
         stationsArray: data.stations,
         scheduleId: data.id,
         trainObject: data.train,
-        status: data.status,
+        status: data.isPublished,
       });
       console.log("this.state.schedulesss123", this.state.scheduleId);
       console.log("this.state.schedulesss123", this.state.status);
@@ -475,15 +475,15 @@ export default class ScheduleManagementTab extends Component {
               Close
             </Button>
             <div
-              style={{ float: "right", marginTop: "-70%", width: "300px" }}
+              style={{ float: "right", marginTop: "-40%", width: "300px" }}
             >
               <div
               >
                 <p style={{ textAlign: "center" }}>
-                  Available Reservation Summary
+                  {/* Available Reservation Summary */}
                 </p>
                 <div>
-                  {this.state.resevation != null ? (
+                  {/* {this.state.resevation != null ? (
                     <div>
                       <Paper
                         elevation={3}
@@ -500,20 +500,17 @@ export default class ScheduleManagementTab extends Component {
                         <Typography variant="body1" style={{textAlign: 'left'}}>
                           Reservation Count: <span style={{textAlign: 'right'}}>{this.state.resevation.resevationCount}</span>
                         </Typography>
-                        <Typography variant="body1" style={{textAlign: 'left'}}>
-                          Total Price: <span style={{textAlign: 'right'}}>Rs.{this.state.resevation.totalPrice}</span>
-                        </Typography>
                       </Paper>
                     </div>
                   ) : (
                     <div>test</div>
-                  )}
+                  )} */}
                   <div style={{margin: '0px'}}>
                 {/* ,pointerEvents: this.state.resevation.isStatusChanged ? '': 'none' */}
                 <Paper elevation={3}
                         style={{
                           textAlign: "center", width: '300px', padding: '1px', marginBottom: '30px'
-                        }}><ControlSchedulePanel scheduleId={this.state.scheduleId} train_status={this.state.train_status} handleControlPanelDialogClose={this.handleControlPanelDialogClose}/></Paper>
+                        }}><ControlSchedulePanel scheduleId={this.state.scheduleId} status={this.state.status} fetchSchedules={this.fetchSchedules}/></Paper>
                 </div>
                 </div>
                 <div style={{margin: '0px'}}>
@@ -521,7 +518,7 @@ export default class ScheduleManagementTab extends Component {
                 <Paper elevation={3}
                         style={{
                           textAlign: "center", width: '300px', padding: '1px'
-                        }}><ControlPanel scheduleId={this.state.scheduleId} train_status={this.state.train_status} handleControlPanelDialogClose={this.handleControlPanelDialogClose}/></Paper>
+                        }}><ControlPanel scheduleId={this.state.scheduleId} status={this.state.status} handleControlPanelDialogClose={this.handleControlPanelDialogClose}/></Paper>
                 </div>
               </div>
             </div>

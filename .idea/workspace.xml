@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c737031-8624-4234-91d1-5d7b1d6d153c" name="Changes" comment="Madushan S H K --implement reservation train status update UI">
-      <change beforePath="$PROJECT_DIR$/src/components/trainManagement/schedule/TrainManagementTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/trainManagement/schedule/TrainManagementTab.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/trainManagement/train/createSchedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/trainManagement/train/createSchedule.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/scheduleService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/scheduleService.js" afterDir="false" />
-    </list>
+    <list default="true" id="6c737031-8624-4234-91d1-5d7b1d6d153c" name="Changes" comment="Madushan S H K --implement train status update UI" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,7 +80,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696974969382</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Madushan S H K --implement train status update UI">
+      <created>1697065534419</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1697065534419</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -104,6 +107,7 @@
     <MESSAGE value="Madushan S H K --implement train scheduling parts" />
     <MESSAGE value="Madushan S H K --implement Train Scheduling feature" />
     <MESSAGE value="IT20122096 - reservation and add train management to profile" />
-    <option name="LAST_COMMIT_MESSAGE" value="IT20122096 - reservation and add train management to profile" />
+    <MESSAGE value="Madushan S H K --implement train status update UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Madushan S H K --implement train status update UI" />
   </component>
 </project>

@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Switch from "@mui/material/Switch";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { updateScheduleTrainStatus } from "../../../services/scheduleService";
+import { updateScheduleTrainStatus, updateResevationScheduleTrainStatus } from "../../../services/scheduleService";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -19,10 +19,11 @@ class ControlSchedulePanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: this.props.train_status,
-      scheduleId: this.props.scheduleId,
+      checked: props.status,
+      scheduleId: props.scheduleId,
       isAlertMsg: false,
-      alertseverity: "success"
+      alertseverity: "success",
+      train_status: this.props.status,
     };
   }
   handleAlertClose = (event, reason) => {
@@ -39,31 +40,27 @@ class ControlSchedulePanel extends Component {
 //   warning
   updateTrainReservation = async () => {
     try {
-      const { data } = await updateScheduleTrainStatus(this.state.scheduleId, this.state.checked);
+      const { data } = await updateResevationScheduleTrainStatus(this.props.scheduleId, this.state.checked);
+      console.log("kkkkkkkkkkk", data)
+      if (data == "Train not found"){
+        
+      }
       
       console.log("this.state.schedules", this.state.scheduleId);
       // this.props.handleControlPanelDialogClose();
+      // this.props.fetchSchedules();
+      
     } catch (error) {
       // Handle error if needed
       console.log(error);
     }
   };
 
-  updateTrainReservation = async () => {
-    try {
-      const { data } = await updateScheduleTrainStatus(this.state.scheduleId, this.state.checked);
-      
-      console.log("this.state.schedules", this.state.scheduleId);
-      // this.props.handleControlPanelDialogClose();
-    } catch (error) {
-      // Handle error if needed
-      console.log(error);
-    }
-  };
+  
 
   render() {
     const { checked } = this.state;
-    const { train_status } = this.props;
+    const { status } = this.props;
     const { scheduleId } = this.props;
 
     return (
@@ -77,7 +74,7 @@ class ControlSchedulePanel extends Component {
             </Grid>
             <Grid item>
               <Typography gutterBottom variant="h6" component="div">
-                {train_status ? (
+                {this.props.status ? (
                   <Chip color="success" label="PUBLISHED" />
                 ) : (
                   <Chip color="warning" label="CANCELED" />

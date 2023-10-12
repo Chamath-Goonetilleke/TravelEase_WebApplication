@@ -98,6 +98,7 @@ export default class TrainManagementTab extends Component {
   };
   handleScheduleDialogClose = () => {
     this.setState({ scheduleIsOpen: false });
+    
   };
   handleControlPanelDialogOpen = async () => {
     // this.setState({train_id: id, train_status: status})
@@ -121,9 +122,9 @@ export default class TrainManagementTab extends Component {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Reference</TableCell>
+              <TableCell align="right">Train Number</TableCell>
                 <TableCell align="right">Name</TableCell>
-                <TableCell align="right">Train Number</TableCell>
+                
                 <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
