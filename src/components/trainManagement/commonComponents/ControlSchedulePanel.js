@@ -10,6 +10,8 @@ import Switch from "@mui/material/Switch";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { updateScheduleTrainStatus, updateResevationScheduleTrainStatus } from "../../../services/scheduleService";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -24,6 +26,7 @@ class ControlSchedulePanel extends Component {
       isAlertMsg: false,
       alertseverity: "success",
       train_status: this.props.status,
+      open: false,
     };
   }
   handleAlertClose = (event, reason) => {
@@ -40,10 +43,14 @@ class ControlSchedulePanel extends Component {
 //   warning
   updateTrainReservation = async () => {
     try {
+      // this.props.scheduleId
       const { data } = await updateResevationScheduleTrainStatus(this.props.scheduleId, this.state.checked);
       console.log("kkkkkkkkkkk", data)
-      if (data == "Train not found"){
+      if (data == "Status updated successfully"){
+        console.log("mmmmmmmmm", data)
         
+      }else{
+        this.setState({open: true})
       }
       
       console.log("this.state.schedules", this.state.scheduleId);
@@ -54,6 +61,9 @@ class ControlSchedulePanel extends Component {
       // Handle error if needed
       console.log(error);
     }
+  };
+  handleDialogClose = () => {
+    this.setState({open: false})
   };
 
   
@@ -89,7 +99,7 @@ class ControlSchedulePanel extends Component {
         <Divider variant="middle" />
         <Box sx={{ m: 2 }}>
           <Typography gutterBottom variant="body1">
-            Select Status{" "}
+            Select Status{this.state.open}
             <Switch
               checked={checked}
               onChange={this.handleChange}
@@ -127,6 +137,14 @@ class ControlSchedulePanel extends Component {
             Successfully Created!
           </Alert>
         </Snackbar>
+        <Dialog
+            open={this.state.open}
+            onClose={this.handleDialogClose}
+            keepMounted
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle>Cannot Cancled Train. You have Resevations</DialogTitle>
+          </Dialog>
       </Box>
     );
   }
