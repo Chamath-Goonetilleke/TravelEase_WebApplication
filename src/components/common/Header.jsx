@@ -145,17 +145,7 @@ function AppHeader({ user, onLogout }) {
             TravelEase
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page, index) => (
-              <NavLink key={index} to={urls[pages.indexOf(page)]}>
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {page}
-                </Button>
-              </NavLink>
-            ))}
+            
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
