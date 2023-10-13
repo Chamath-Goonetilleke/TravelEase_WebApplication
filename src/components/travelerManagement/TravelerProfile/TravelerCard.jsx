@@ -1,15 +1,22 @@
+/*
+------------------------------------------------------------------------------
+File: TravelerCard.js
+Purpose: This file contains the TravelerCard React component, which displays
+information about a traveler.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import { Avatar, Chip } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export default function TravelerCard({ traveler,role }) { 
-
+export default function TravelerCard({ traveler, role }) {
   return (
-    <Card sx={{ minWidth: 200, marginRight: "1rem" }}>
+    <Card sx={{ minWidth: 200, marginRight: "1rem" }} elevation={8}>
       <CardContent>
         <div
           style={{
@@ -20,7 +27,7 @@ export default function TravelerCard({ traveler,role }) {
         >
           <Avatar
             alt=""
-            src={"avatarImage || user.imageUrl"}
+            src={traveler.imageUrl}
             sx={{ width: 100, height: 100, marginBottom: ".6rem" }}
           />
           <div>NIC : {traveler.nic}</div>

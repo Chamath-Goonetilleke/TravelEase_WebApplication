@@ -1,3 +1,12 @@
+/*
+------------------------------------------------------------------------------
+File: InitialDetails.js
+Purpose: This file contains the InitialDetails React component, which
+allows users to enter initial details for a train reservation.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React from "react";
 import Joi from "joi-browser";
 import Form from "../../common/form";
@@ -51,7 +60,7 @@ export default class InitialDetails extends Form {
   };
 
   render() {
-    const {data} = this.state;
+    const { data } = this.state;
     return (
       <div style={{ marginTop: "2rem" }}>
         <form onSubmit={this.handleSubmit}>

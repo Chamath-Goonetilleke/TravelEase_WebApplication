@@ -1,3 +1,11 @@
+/*
+------------------------------------------------------------------------------
+File: ProfilePage.js
+Purpose: This file contains the ProfilePage React component, which displays user profile information and functionality.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import { Avatar, Button, Fab } from "@mui/material";
 import React, { Component } from "react";
 import UpdateBackOfficeUser from "./UpdateBackOfficeUser";
@@ -5,8 +13,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { updateUser } from "../../../services/userService";
 import { toast } from "react-toastify";
 import UpdateTravelAgent from "./UpdateTravelAgent";
-import TravelAgentFunctions from "./TravelAgentFunctons";
-//import BackOfficeUserFunctions from "./BackOfficeUserFunctions";
+import UserFunctions from "./UserFunctons";
 
 export default class ProfilePage extends Component {
   state = {
@@ -189,14 +196,7 @@ export default class ProfilePage extends Component {
               display: "flex",
             }}
           >
-            {/* {user.role === "BackOfficeUser" ? (
-              <BackOfficeUserFunctions/>
-            ) : user.role === "TravelAgent" ? (
-              <TravelAgentFunctions user={user} role={user.role} />
-            ) : (
-              <></>
-            )} */}
-            <TravelAgentFunctions user={user} role={user.role} />
+            <UserFunctions user={user} role={user.role} />
           </div>
         </div>
       </div>

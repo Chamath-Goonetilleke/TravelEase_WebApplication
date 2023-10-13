@@ -1,3 +1,12 @@
+/* 
+------------------------------------------------------------------------------
+ File: AppHeader.js
+ Purpose: This file contains the AppHeader React component, which is used for
+ rendering the header of the TravelEase web application.
+ Author: IT20122096
+ Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,11 +24,8 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { NavLink } from "react-router-dom";
 
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import { Badge } from "@mui/material";
 
 function AppHeader({ user, onLogout }) {
   const pages = ["Home", "About Us", "Contacts Us"];
@@ -27,13 +33,6 @@ function AppHeader({ user, onLogout }) {
   const settings = [];
 
   if (user != null) {
-    // if (user.isAdmin) {
-    //   settings.push({
-    //     screen: "Admin Panel",
-    //     path: "/admin",
-    //     icon: <AdminPanelSettingsIcon />,
-    //   });
-    // }
     settings.push({
       screen: "Profile",
       path: "/profile",
@@ -146,28 +145,9 @@ function AppHeader({ user, onLogout }) {
             TravelEase
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page, index) => (
-              <NavLink key={index} to={urls[pages.indexOf(page)]}>
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {page}
-                </Button>
-              </NavLink>
-            ))}
+            
           </Box>
-          <IconButton
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-            style={{ marginRight: "2rem", color: "white" }}
-          >
-            <Badge badgeContent={17} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

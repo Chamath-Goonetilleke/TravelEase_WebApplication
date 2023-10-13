@@ -1,3 +1,12 @@
+/*
+------------------------------------------------------------------------------
+File: StepperBody.js
+Purpose: This file contains the StepperBody React component, which manages
+the step-wise reservation process.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React, { Component } from "react";
 import InitialDetails from "./stepperSteps/InitialDetails";
 import CheckAvailability from "./stepperSteps/CheckAvailability";
@@ -121,7 +130,7 @@ export default class StepperBody extends Component {
   };
 
   render() {
-    const { activeStep } = this.props;
+    const { activeStep, travelerState } = this.props;
     const {
       initialDetails,
       filteredSchedules,
@@ -131,11 +140,12 @@ export default class StepperBody extends Component {
       isLoading,
     } = this.state;
     return (
-      <Paper elevation={8} >
+      <Paper elevation={8}>
         <div
           style={{
             padding: "1rem",
             marginTop: "2rem",
+            pointerEvents: travelerState === 1 ? "none" : "auto",
           }}
         >
           {activeStep === 0 ? (

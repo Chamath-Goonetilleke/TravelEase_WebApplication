@@ -1,6 +1,14 @@
-import React, { Component } from 'react'
-import { Route, Switch, Redirect } from "react-router-dom";
-import TrainPage from './components/trainManagement/train/trainpage';
+/*
+------------------------------------------------------------------------------
+File: App.js
+Purpose: This file contains the main application component, including routing, user authentication, and rendering different pages.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
+import TrainPage from "./components/trainManagement/train/trainpage";
 import { ToastContainer, Zoom } from "react-toastify";
 
 import AppHeader from "./components/common/Header";
@@ -12,7 +20,6 @@ import { currentUser } from "./services/authService";
 import Cookies from "js-cookie";
 import PrivateRoute from "./components/common/PrivateRoute";
 import ProfilePage from "./components/userManagement/UserProfile/ProfilePage";
-import Home from "./components/userManagement/Home";
 import TravelerProfilePage from "./components/travelerManagement/TravelerProfile/TravelerProfilePage";
 
 export default class App extends Component {
@@ -24,6 +31,13 @@ export default class App extends Component {
     };
     this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
   }
+
+  /*
+  ------------------------------------------------------------------------------
+  Method: loadCurrentlyLoggedInUser
+  Purpose: Loads the currently logged-in user's information from the server.
+  ------------------------------------------------------------------------------
+  */
   loadCurrentlyLoggedInUser = async () => {
     await currentUser()
       .then(({ data }) => {
@@ -32,6 +46,12 @@ export default class App extends Component {
       .catch((err) => console.log(err));
   };
 
+  /*
+  ------------------------------------------------------------------------------
+  Method: handleLogout
+  Purpose: Handles the logout action by removing the authentication token and redirecting to the login page.
+  ------------------------------------------------------------------------------
+  */
   handleLogout = () => {
     Cookies.remove("token");
     window.location = "/login";
@@ -45,7 +65,6 @@ export default class App extends Component {
     const { authenticated, currentUser } = this.state;
     console.log(currentUser);
     return (
-
       <div className="app">
         <div className="app-header">
           <AppHeader user={currentUser} onLogout={this.handleLogout} />
@@ -57,20 +76,25 @@ export default class App extends Component {
           }}
         >
           <Switch>
-            {!authenticated && (
+            {!authenticated ? (
               <Route exact path="/login" component={LoginRegPage} />
+            ) : (
+              <>
+                <PrivateRoute
+                  path="/profile"
+                  component={ProfilePage}
+                  authenticated={authenticated}
+                  user={currentUser}
+                />
+                <Route
+                  path="/traveler/:nic"
+                  render={(props) => (
+                    <TravelerProfilePage user={currentUser} {...props} />
+                  )}
+                />
+                <Route path="/schedule-train" component={TrainPage}></Route>
+              </>
             )}
-            <PrivateRoute
-              path="/profile"
-              component={ProfilePage}
-              authenticated={authenticated}
-              user={currentUser}
-            />
-            <Route path = '/traveler/:nic' render={(props)=> <TravelerProfilePage user={currentUser} {...props} />} />
-            <Route path="/home" component={Home} />
-            <Route path="/schedule-train" component={TrainPage}></Route>
-            <Redirect to="/home" />
-            
           </Switch>
           <ToastContainer
             position="top-right"
@@ -93,4 +117,3 @@ export default class App extends Component {
     );
   }
 }
-

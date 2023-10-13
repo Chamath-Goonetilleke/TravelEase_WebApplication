@@ -1,4 +1,13 @@
-import React from 'react';
+/* 
+------------------------------------------------------------------------------
+ File: Footer.js
+ Purpose: This file contains the Footer React component, which is responsible for
+ rendering the footer section in the TravelEase web application.
+ Author: IT20122096
+ Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
+import React from "react";
 
 const Footer = () => {
   return (

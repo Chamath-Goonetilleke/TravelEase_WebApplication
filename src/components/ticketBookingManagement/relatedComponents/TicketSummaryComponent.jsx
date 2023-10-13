@@ -1,3 +1,12 @@
+/*
+------------------------------------------------------------------------------
+File: TicketSummaryComponent.js
+Purpose: This file contains the TicketSummaryComponent React component, which
+displays a summary of train ticket information, including train details, passenger count, class, and total price.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -7,7 +16,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-export default function TicketSummaryComponent({ schedule, passengers, selectedClass }) {
+export default function TicketSummaryComponent({
+  schedule,
+  passengers,
+  selectedClass,
+}) {
   const trainInfo = {
     trainName: schedule.name,
     startStation: schedule.from,
@@ -26,10 +39,7 @@ export default function TicketSummaryComponent({ schedule, passengers, selectedC
   return (
     <Paper elevation={0}>
       <TableContainer>
-        <Table
-          aria-label="Train Information"
-          size="small"
-        >
+        <Table aria-label="Train Information" size="small">
           <TableHead>
             <TableRow
               style={{

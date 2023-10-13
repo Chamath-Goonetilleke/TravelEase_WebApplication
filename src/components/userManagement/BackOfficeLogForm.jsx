@@ -1,3 +1,11 @@
+/*
+------------------------------------------------------------------------------
+File: BackOfficeLogForm.js
+Purpose: This file contains the BackOfficeLogForm React component, which is used for the Back Office User login.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React from "react";
 import Joi from "joi-browser";
 

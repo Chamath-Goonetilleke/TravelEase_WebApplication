@@ -1,7 +1,15 @@
-import { Paper } from "@mui/material";
+/*
+------------------------------------------------------------------------------
+File: ConfirmationAndPayment.js
+Purpose: This file contains the ConfirmationAndPayment React component, which
+allows users to select a seat class and displays a summary of the reservation.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React, { Component } from "react";
-import ClassCard from "../ClassCard";
-import TicketSummaryComponent from "../TicketSummaryComponent";
+import ClassCard from "../relatedComponents/ClassCard";
+import TicketSummaryComponent from "../relatedComponents/TicketSummaryComponent";
 
 export default class ConfirmationAndPayment extends Component {
   state = {
@@ -26,10 +34,10 @@ export default class ConfirmationAndPayment extends Component {
       trainNo: schedule.trainNo,
       trainClass: cls.className,
       classPrice: price,
-      totalPrice: price * (this.props.passengers+1),
+      totalPrice: price * (this.props.passengers + 1),
     };
 
-    this.props.getReservation(reservation)
+    this.props.getReservation(reservation);
   };
 
   render() {

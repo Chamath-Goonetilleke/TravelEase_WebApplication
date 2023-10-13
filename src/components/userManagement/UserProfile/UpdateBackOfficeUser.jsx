@@ -1,3 +1,11 @@
+/*
+------------------------------------------------------------------------------
+File: UpdateBackOfficeUser.js
+Purpose: This file contains the UpdateBackOfficeUser React component, which allows back-office users to update their details.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React from "react";
 import Joi from "joi-browser";
 

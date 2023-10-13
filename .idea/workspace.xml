@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c737031-8624-4234-91d1-5d7b1d6d153c" name="Changes" comment="Madushan S H K --implement train scheduling status update UIs" />
+    <list default="true" id="6c737031-8624-4234-91d1-5d7b1d6d153c" name="Changes" comment="IT20122096 - add comments" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,35 +80,23 @@
       <option name="project" value="LOCAL" />
       <updated>1696974969382</updated>
     </task>
-    <task id="LOCAL-00006" summary="Madushan S H K --implement train status update UI">
-      <created>1697065534419</created>
+    <task id="LOCAL-00006" summary="IT20122096 - reservation creation">
+      <option name="closed" value="true" />
+      <created>1697037748121</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1697065534419</updated>
+      <updated>1697037748121</updated>
     </task>
-    <task id="LOCAL-00007" summary="Madushan S H K --implement train status update UIs">
-      <created>1697151937555</created>
+    <task id="LOCAL-00007" summary="IT20122096 - add comments">
+      <option name="closed" value="true" />
+      <created>1697203137895</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1697151937555</updated>
+      <updated>1697203137895</updated>
     </task>
-    <task id="LOCAL-00008" summary="Madushan S H K --implement train scheduling status update UIs">
-      <created>1697153436841</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1697153436841</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Madushan S H K --implement train scheduling status update UIs">
-      <created>1697153443061</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1697153443061</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -128,9 +116,8 @@
     <MESSAGE value="Madushan S H K --implement train scheduling parts" />
     <MESSAGE value="Madushan S H K --implement Train Scheduling feature" />
     <MESSAGE value="IT20122096 - reservation and add train management to profile" />
-    <MESSAGE value="Madushan S H K --implement train status update UI" />
-    <MESSAGE value="Madushan S H K --implement train status update UIs" />
-    <MESSAGE value="Madushan S H K --implement train scheduling status update UIs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Madushan S H K --implement train scheduling status update UIs" />
+    <MESSAGE value="IT20122096 - reservation creation" />
+    <MESSAGE value="IT20122096 - add comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="IT20122096 - add comments" />
   </component>
 </project>

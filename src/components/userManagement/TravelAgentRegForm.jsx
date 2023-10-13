@@ -1,3 +1,11 @@
+/*
+------------------------------------------------------------------------------
+File: TravelAgentRegForm.js
+Purpose: This file contains the TravelAgentRegForm React component, which allows Travel Agents to register.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React from "react";
 import Joi from "joi-browser";
 import { toast } from "react-toastify";
@@ -54,7 +62,7 @@ export default class TravelAgentRegForm extends Form {
       cPassword: "",
     };
 
-    this.setState({ data:data, errors:{} });
+    this.setState({ data: data, errors: {} });
   };
 
   doSubmit = async () => {
