@@ -156,7 +156,9 @@ export default class UserFunctions extends Component {
                 ))}
               </div>
             ) : (
-              <div>No Travelers Found</div>
+              <center>
+                <h4>No Travelers Found</h4>
+              </center>
             )}
           </AccordionDetails>
         </Accordion>
@@ -222,7 +224,11 @@ export default class UserFunctions extends Component {
                   {requests.length !== 0 ? (
                     requests.map((req) => <RequestCard request={req} />)
                   ) : (
-                    <div>No Activation Requests</div>
+                    <div>
+                      <center>
+                        <h4>No Activation Requests</h4>
+                      </center>
+                    </div>
                   )}
                 </div>
               </AccordionDetails>

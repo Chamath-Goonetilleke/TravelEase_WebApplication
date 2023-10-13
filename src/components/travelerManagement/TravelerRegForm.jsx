@@ -66,7 +66,7 @@ export default class TravelerRegForm extends Form {
 
     await createTraveler(traveler)
       .then(({ data }) => {
-        toast.success(data, { autoClose: 1000 });
+        toast.success(data.res, { autoClose: 1000 });
         this.setState({ isLoading: false });
         setTimeout(async () => {
           this.onReset();
