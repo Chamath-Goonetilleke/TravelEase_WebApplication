@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c737031-8624-4234-91d1-5d7b1d6d153c" name="Changes" comment="IT20122096 - add comments" />
+    <list default="true" id="6c737031-8624-4234-91d1-5d7b1d6d153c" name="Changes" comment="Madushan S H K --implement train scheduling status update UIs">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

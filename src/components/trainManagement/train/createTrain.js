@@ -52,7 +52,7 @@ export default class createTrain extends Component {
   };
   handleNewRecordToData = () => {
     const {className, seatCount} = this.state.newRecord;
-    const availableCount = 0
+    const availableCount = seatCount
     const newFields = [
       ...this.state.stationsArray,
       { className, seatCount, availableCount },
