@@ -1,10 +1,13 @@
+/*
+------------------------------------------------------------------------------
+File: LoginRegPage.js
+Purpose: This file contains the LoginRegPage React component, which allows users to log in or register for different roles (Travel Agent or Back Office User).
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React, { Component } from "react";
-import {
-  Button,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { Button, InputLabel, MenuItem, Select } from "@mui/material";
 
 import TravelAgentRegForm from "./TravelAgentRegForm";
 import TravelAgentLogForm from "./TravelAgentLogForm";

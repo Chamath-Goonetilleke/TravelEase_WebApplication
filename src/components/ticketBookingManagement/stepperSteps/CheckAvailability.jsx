@@ -1,11 +1,19 @@
-import React, { Component } from 'react'
-import AvailableTrainsTables from '../AvailableTrainsTabel'
+/*
+------------------------------------------------------------------------------
+File: CheckAvailability.js
+Purpose: This file contains the CheckAvailability React component, which
+displays available train schedules and allows users to select a schedule.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
+import React, { Component } from "react";
+import AvailableTrainsTables from "../relatedComponents/AvailableTrainsTabel";
 
 export default class CheckAvailability extends Component {
-
   render() {
-    const {schedules,onSelectSchedule} = this.props
-    console.log(schedules)
+    const { schedules, onSelectSchedule } = this.props;
+    console.log(schedules);
     return (
       <div>
         {schedules.length > 0 ? (

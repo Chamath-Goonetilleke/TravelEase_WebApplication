@@ -1,9 +1,17 @@
-import Joi  from 'joi-browser';
-import React from 'react'
-import Form from '../../common/form';
-import { updateUser } from '../../../services/userService';
-import { toast } from 'react-toastify';
-import { Button } from '@mui/material';
+/*
+------------------------------------------------------------------------------
+File: UpdateTravelAgent.js
+Purpose: This file contains the UpdateTravelAgent React component, which allows travel agents to update their details.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
+import Joi from "joi-browser";
+import React from "react";
+import Form from "../../common/form";
+import { updateUser } from "../../../services/userService";
+import { toast } from "react-toastify";
+import { Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
 export default class UpdateTravelAgent extends Form {

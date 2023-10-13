@@ -1,3 +1,12 @@
+/*
+------------------------------------------------------------------------------
+File: PassengerInformation.js
+Purpose: This file contains the PassengerInformation React component, which
+handles passenger information for a train reservation.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React, { Component } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -43,7 +52,7 @@ export default class PassengerInformation extends Component {
       type: "",
       nic: null,
     };
-    this.props.onAddPassenger(passengers)
+    this.props.onAddPassenger(passengers);
     this.setState({ passengers: passengers, passenger: passenger });
   };
 

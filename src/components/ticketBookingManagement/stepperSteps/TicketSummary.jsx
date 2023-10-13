@@ -1,3 +1,12 @@
+/*
+------------------------------------------------------------------------------
+File: TicketSummary.js
+Purpose: This file contains the TicketSummary React component, which displays
+a booking summary after a successful train reservation.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,27 +18,6 @@ import Paper from "@mui/material/Paper";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 export default function TicketSummary({ reservation }) {
-  // const reservation = {
-  //   scheduleId: "652428d07239d4f4fc05bebd",
-  //   travelerNIC: "fdsgdsgds",
-  //   from: "Bentota",
-  //   to: "Beruwala",
-  //   time: "8.00 - 9.00",
-  //   date: "2023-10-20",
-  //   passengers: [
-  //     {
-  //       type: "Adult",
-  //       nic: "200008003230",
-  //     },
-  //   ],
-  //   trainName: "Tikirio",
-  //   trainNo: "5003",
-  //   trainClass: "First",
-  //   classPrice: "400",
-  //   totalPrice: "800",
-  //   isTravelerCreated: true,
-  //   travelAgentId: "652171eecd4cfb9ab6300e47",
-  // };
   return (
     <div>
       <div

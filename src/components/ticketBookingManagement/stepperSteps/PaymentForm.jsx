@@ -1,3 +1,12 @@
+/*
+------------------------------------------------------------------------------
+File: PaymentForm.js
+Purpose: This file contains the PaymentForm React component, which handles
+payment information for a train reservation.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React from "react";
 import Form from "../../common/form";
 import Joi from "joi-browser";
@@ -20,7 +29,7 @@ export default class PaymentForm extends Form {
   };
 
   doSubmit = () => {
-    const paymentData = this.state.data
+    const paymentData = this.state.data;
     this.props.handleSubmit(paymentData);
   };
 

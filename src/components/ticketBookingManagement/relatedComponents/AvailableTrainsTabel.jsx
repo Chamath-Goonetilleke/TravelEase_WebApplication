@@ -1,3 +1,12 @@
+/*
+------------------------------------------------------------------------------
+File: AvailableTrainsTables.js
+Purpose: This file contains the AvailableTrainsTables React component, which is
+used to display a table of available train schedules.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import * as React from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
@@ -12,12 +21,9 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
@@ -28,7 +34,8 @@ function createData(
   arrives,
   trainClass,
   availableSeats,
-  price,id
+  price,
+  id
 ) {
   return {
     trainName,
@@ -36,7 +43,8 @@ function createData(
     arrives,
     trainClass,
     availableSeats,
-    price,id
+    price,
+    id,
   };
 }
 
@@ -234,7 +242,7 @@ export default function AvailableTrainsTables({ schedules, onSelectSchedule }) {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rows, setRows] = React.useState([...handleRows(schedules)]);
+  const [rows] = React.useState([...handleRows(schedules)]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -255,7 +263,7 @@ export default function AvailableTrainsTables({ schedules, onSelectSchedule }) {
     const selectedIndex = selected.indexOf(name);
 
     if (selected.length < 1) {
-        onSelectSchedule(name);
+      onSelectSchedule(name);
       let newSelected = [];
       if (selectedIndex === -1) {
         newSelected = newSelected.concat(selected, name);
@@ -269,7 +277,7 @@ export default function AvailableTrainsTables({ schedules, onSelectSchedule }) {
           selected.slice(selectedIndex + 1)
         );
       }
-      
+
       setSelected(newSelected);
     }
   };
@@ -304,91 +312,89 @@ export default function AvailableTrainsTables({ schedules, onSelectSchedule }) {
 
   return (
     <Box sx={{ width: "100%" }}>
+      <EnhancedTableToolbar
+        numSelected={selected.length}
+        handleRemove={handleRemove}
+        departs={schedules[0].from}
+        arrives={schedules[0].to}
+      />
+      <TableContainer>
+        <Table
+          sx={{ minWidth: 750 }}
+          aria-labelledby="tableTitle"
+          size={"medium"}
+        >
+          <EnhancedTableHead
+            numSelected={selected.length}
+            order={order}
+            orderBy={orderBy}
+            onSelectAllClick={handleSelectAllClick}
+            onRequestSort={handleRequestSort}
+            rowCount={rows.length}
+          />
+          <TableBody>
+            {visibleRows.map((row, index) => {
+              const isItemSelected = isSelected(row.trainName);
+              const labelId = `enhanced-table-checkbox-${index}`;
 
-        <EnhancedTableToolbar
-          numSelected={selected.length}
-          handleRemove={handleRemove}
-          departs={schedules[0].from}
-          arrives={schedules[0].to}
-        />
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={"medium"}
-          >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.trainName);
-                const labelId = `enhanced-table-checkbox-${index}`;
-
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row.trainName)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.trainName}
-                    selected={isItemSelected}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
-                      {row.trainName}
-                    </TableCell>
-                    <TableCell align="center">{row.departs}</TableCell>
-                    <TableCell align="center">{row.arrives}</TableCell>
-                    <TableCell align="center">{row.trainClass}</TableCell>
-                    <TableCell align="center">{row.availableSeats}</TableCell>
-                    <TableCell align="center">{row.price}</TableCell>
-                  </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
+              return (
                 <TableRow
-                  style={{
-                    height: 53 * emptyRows,
-                  }}
+                  hover
+                  onClick={(event) => handleClick(event, row.trainName)}
+                  role="checkbox"
+                  aria-checked={isItemSelected}
+                  tabIndex={-1}
+                  key={row.trainName}
+                  selected={isItemSelected}
+                  sx={{ cursor: "pointer" }}
                 >
-                  <TableCell colSpan={6} />
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      color="primary"
+                      checked={isItemSelected}
+                      inputProps={{
+                        "aria-labelledby": labelId,
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell
+                    component="th"
+                    id={labelId}
+                    scope="row"
+                    padding="none"
+                  >
+                    {row.trainName}
+                  </TableCell>
+                  <TableCell align="center">{row.departs}</TableCell>
+                  <TableCell align="center">{row.arrives}</TableCell>
+                  <TableCell align="center">{row.trainClass}</TableCell>
+                  <TableCell align="center">{row.availableSeats}</TableCell>
+                  <TableCell align="center">{row.price}</TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{ marginTop: "2rem" }}
-        />
-
+              );
+            })}
+            {emptyRows > 0 && (
+              <TableRow
+                style={{
+                  height: 53 * emptyRows,
+                }}
+              >
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        sx={{ marginTop: "2rem" }}
+      />
     </Box>
   );
 }

@@ -1,3 +1,13 @@
+/*
+------------------------------------------------------------------------------
+File: ReservationStepper.js
+Purpose: This file contains the ReservationStepper React component, which
+provides a step-by-step reservation process for travelers.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -5,8 +15,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import StepperBody from "./StepperBody";
-import TicketSummary from './stepperSteps/TicketSummary';
-
+import TicketSummary from "./stepperSteps/TicketSummary";
 
 const steps = [
   "Initial Details",
@@ -16,13 +25,12 @@ const steps = [
   "Payment & Checkout",
 ];
 
-export default function ReservationStepper({ travelerNIC }) {
+export default function ReservationStepper({ travelerNIC, travelerState }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [reservationSummary, setReservationSummary] = React.useState({});
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    // setActiveStep(steps.length);
   };
 
   const handleBack = () => {
@@ -31,16 +39,16 @@ export default function ReservationStepper({ travelerNIC }) {
 
   const handleReset = () => {
     setActiveStep(0);
+    window.location.reload();
   };
 
   const handleWithoutNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
   };
 
   const handleGetReservation = (reservation) => {
-    setReservationSummary(reservation)
-  }
+    setReservationSummary(reservation);
+  };
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -71,6 +79,7 @@ export default function ReservationStepper({ travelerNIC }) {
             activeStep={activeStep}
             nextHandle={handleWithoutNext}
             travelerNIC={travelerNIC}
+            travelerState={travelerState}
             getReservationSummary={handleGetReservation}
           />
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>

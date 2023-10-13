@@ -1,3 +1,12 @@
+/* 
+------------------------------------------------------------------------------
+ File: AlertDialog.js
+ Purpose: This file contains the AlertDialog React component, which is responsible
+ for displaying an alert dialog in the TravelEase web application.
+ Author: IT20122096
+ Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -31,7 +40,7 @@ export default function AlertDialog({
           <Button
             onClick={() => {
               onOKButton();
-              handleClose();   
+              handleClose();
             }}
             autoFocus
           >

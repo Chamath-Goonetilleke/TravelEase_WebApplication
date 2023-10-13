@@ -1,3 +1,11 @@
+/*
+------------------------------------------------------------------------------
+File: UserFunctions.js
+Purpose: This file contains the UserFunctions React component, which manages travelers and activation requests for different user roles.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React, { Component } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -14,6 +22,7 @@ import { getAllRequests } from "../../../services/accountRequestService";
 import RequestCard from "./RequestCard";
 import { Chip } from "@mui/material";
 import TrainPage from "../../trainManagement/train/trainpage";
+import TravelAgentReservations from "./TravelAgentReservations";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -56,7 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-export default class TravelAgentFunctions extends Component {
+export default class UserFunctions extends Component {
   state = {
     searchValue: null,
     travelers: [],
@@ -92,7 +101,7 @@ export default class TravelAgentFunctions extends Component {
   render() {
     const { searchValue, filteredTravelers, requests } = this.state;
     const role = this.props.role;
-    console.log(requests)
+    console.log(requests);
     return (
       <div
         style={{
@@ -133,7 +142,15 @@ export default class TravelAgentFunctions extends Component {
           </AccordionSummary>
           <AccordionDetails>
             {filteredTravelers.length > 0 ? (
-              <div style={{ display: "flex", flexDirection: "row" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  maxWidth: "100vh",
+                  overflow: "auto",
+                  padding: "0.5rem",
+                }}
+              >
                 {filteredTravelers.map((traveler) => (
                   <TravelerCard traveler={traveler} role={role} />
                 ))}
@@ -168,7 +185,9 @@ export default class TravelAgentFunctions extends Component {
               >
                 <Typography fontSize={22}>Traveler Reservations</Typography>
               </AccordionSummary>
-              <AccordionDetails></AccordionDetails>
+              <AccordionDetails>
+                <TravelAgentReservations />
+              </AccordionDetails>
             </Accordion>
           </div>
         ) : (
@@ -191,11 +210,21 @@ export default class TravelAgentFunctions extends Component {
                 />
               </AccordionSummary>
               <AccordionDetails>
-                {requests.length !== 0 ? (
-                  requests.map((req) => <RequestCard request={req} />)
-                ) : (
-                  <div>No Activation Requests</div>
-                )}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    maxHeight: "40vh",
+                    overflow: "auto",
+                    padding: "0.5rem",
+                  }}
+                >
+                  {requests.length !== 0 ? (
+                    requests.map((req) => <RequestCard request={req} />)
+                  ) : (
+                    <div>No Activation Requests</div>
+                  )}
+                </div>
               </AccordionDetails>
             </Accordion>
             <Accordion>
@@ -208,7 +237,7 @@ export default class TravelAgentFunctions extends Component {
                 <Typography fontSize={22}>Train Management</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <TrainPage/>
+                <TrainPage />
               </AccordionDetails>
             </Accordion>
           </div>

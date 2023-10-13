@@ -1,9 +1,17 @@
-import React from 'react'
+/*
+------------------------------------------------------------------------------
+File: TravelAgentLogForm.js
+Purpose: This file contains the TravelAgentLogForm React component, which allows Travel Agents to log in.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
+import React from "react";
 import Joi from "joi-browser";
 
 import Form from "../common/form";
-import { toast } from 'react-toastify';
-import { authUser } from '../../services/authService';
+import { toast } from "react-toastify";
+import { authUser } from "../../services/authService";
 export default class TravelAgentLogForm extends Form {
   state = {
     data: {

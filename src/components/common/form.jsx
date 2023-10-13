@@ -1,13 +1,30 @@
+/* 
+------------------------------------------------------------------------------
+ File: Form.js
+ Purpose: This file contains the Form React component, which is used for
+ handling form inputs and validation in the TravelEase web application.
+ Author: IT20122096
+ Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import TextField from "@mui/material/TextField";
-import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 
 class Form extends Component {
   state = {
     data: {},
     errors: {},
   };
+
+  // Validate the form data against a provided schema.
   validate = (schema, request) => {
     const result = Joi.validate(request, schema);
 
@@ -20,6 +37,7 @@ class Form extends Component {
     return errors;
   };
 
+  // Validate an individual input property.
   validateProperty(input) {
     const obj = { [input.name]: input.value };
     const schema = { [input.name]: this.schema[input.name] };
@@ -29,6 +47,7 @@ class Form extends Component {
     return result.error.details[0].message;
   }
 
+  // Handle the change event for input fields.
   handleChange = (e) => {
     let target = {};
     if (e.currentTarget) {
@@ -50,6 +69,7 @@ class Form extends Component {
     this.setState({ data, errors });
   };
 
+  // Handle the form submission.
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -59,7 +79,8 @@ class Form extends Component {
     this.doSubmit();
   };
 
-  renderInputField(label, name, type, style, isRequired, disabled=false) {
+  // Render an input field with label, name, type, style, and optional properties.
+  renderInputField(label, name, type, style, isRequired, disabled = false) {
     const { data, errors } = this.state;
     return (
       <TextField
@@ -72,10 +93,12 @@ class Form extends Component {
         value={data[name]}
         sx={style}
         helperText={errors[name]}
-        disabled = {disabled}
+        disabled={disabled}
       />
     );
   }
+
+  // Render a button with label, variant, type, and optional properties.
   renderButton(
     label,
     variant,
@@ -104,11 +127,13 @@ class Form extends Component {
       </React.Fragment>
     );
   }
-  renderDropDown(label, name, options, disabled=false, width) {
+
+  // Render a dropdown/select field with label, name, options, and optional properties.
+  renderDropDown(label, name, options, disabled = false, width) {
     const { data } = this.state;
     return (
-      <FormControl disabled={disabled} sx={{width:width}} >
-        <InputLabel  id="demo-simple-select-label">{label}</InputLabel>
+      <FormControl disabled={disabled} sx={{ width: width }}>
+        <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
@@ -116,7 +141,6 @@ class Form extends Component {
           value={data[name]}
           name={name}
           onChange={this.handleChange}
-          
         >
           {options.map((option, index) => (
             <MenuItem key={index} value={option.value}>
@@ -127,29 +151,6 @@ class Form extends Component {
       </FormControl>
     );
   }
-  // renderDatePicker(lable, name) {
-  //   const { data, errors } = this.state;
-  //   return (
-  //     <DateRangeInput
-  //       label={lable}
-  //       name={name}
-  //       onChange={this.handleChange}
-  //       error={errors[name]}
-  //       value={data[name]}
-  //     />
-  //   );
-  // }
-  // renderRadioButtonList(name, options, selected, handleSubmitData) {
-  //   return (
-  //     <RadioButton
-  //       name={name}
-  //       selected={selected}
-  //       options={options}
-  //       onChange={this.handleChange}
-  //       onSubmit={handleSubmitData}
-  //     />
-  //   );
-  // }
 }
 
 export default Form;

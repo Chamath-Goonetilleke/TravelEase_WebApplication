@@ -1,3 +1,12 @@
+/*
+------------------------------------------------------------------------------
+File: UpdateTravelerForm.js
+Purpose: This file contains the UpdateTravelerForm React component, which
+provides a form to update traveler details.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React from "react";
 import Joi from "joi-browser";
 

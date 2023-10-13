@@ -1,3 +1,11 @@
+/*
+------------------------------------------------------------------------------
+File: BackOfficeRegForm.js
+Purpose: This file contains the BackOfficeRegForm React component, which is used for Back Office User registration.
+Author: IT20122096
+Date: 2023-10-13
+------------------------------------------------------------------------------
+*/
 import React from "react";
 import Joi from "joi-browser";
 
@@ -53,7 +61,7 @@ export default class BackOfficeRegForm extends Form {
       password: "",
       cPassword: "",
     };
-    this.setState({ data:data , errors:{}});
+    this.setState({ data: data, errors: {} });
   };
 
   doSubmit = async () => {
@@ -61,21 +69,21 @@ export default class BackOfficeRegForm extends Form {
     data.role = this.props.role;
     delete data.cPassword;
 
-      this.setState({ isLoading: true });
-      await createUser(data)
-        .then(({ data }) => {
-          toast.success(data, { autoClose: 1000 });
-          this.setState({ isLoading: false });
-          setTimeout(async () => {
-            this.onReset();
-            window.location.reload();
-          }, 2000);
-        })
-        .catch((err) => {
-          toast.error(err.response.data);
-          this.setState({ isLoading: false });
+    this.setState({ isLoading: true });
+    await createUser(data)
+      .then(({ data }) => {
+        toast.success(data, { autoClose: 1000 });
+        this.setState({ isLoading: false });
+        setTimeout(async () => {
           this.onReset();
-        });
+          window.location.reload();
+        }, 2000);
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+        this.setState({ isLoading: false });
+        this.onReset();
+      });
   };
 
   render() {
